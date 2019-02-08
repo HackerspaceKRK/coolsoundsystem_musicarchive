@@ -1,0 +1,225 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <link rel="icon" href="https://getbootstrap.com/favicon.ico">
+
+      <title>Starter Template for Bootstrap</title>
+      <style>
+        body {
+          padding-top: 50px;
+          padding-bottom: 20px;
+        }
+      </style>
+      <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="css/main.css">
+
+</head>
+
+<body>
+  <nav class="navbar navbar-dark bg-dark fixed-top navbar-expand-md" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>&#x2630;
+      </button>
+      <a href="#" class="navbar-brand mr-3">
+        <img class="" src="https://static.hskrk.pl/avatarb.svg" width="40px">
+      </a>
+      <a class="navbar-brand" href="#">
+        Co leciało @ hskrk.pl
+      </a>
+
+      <div id="navbar" class="navbar-collapse collapse"></div>
+      <!--/.navbar-collapse -->
+    </div>
+  </nav>
+  <div class="bg">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <!-- Example row of columns -->
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">Autor</th>
+                <th scope="col">Album</th>
+                <th scope="col">Tytuł</th>
+                <th scope="col">Link/ID</th>
+                <th scope="col">Od</th>
+                <th scope="col">Do</th>
+                <th scope="col">Inne</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- TR -->
+              <tr>
+                <td>
+                  <a href="#" class="float-left .img-thumbnail">
+                                <img src="https://i.scdn.co/image/762af66d1a31d1d68221e3721116ae71a6a339e4" class="media-photo">
+                                </a>
+                </td>
+                <td class="align-middle"><strong>Dubioza kolektiv</strong></td>
+                <td class="align-middle">Pjesmice za djecu i odrasle</td>
+                <td class="align-middle"><em>Himna generacije</em></td>
+                <td class="align-middle">
+                  <button
+                    type="button"
+                    class="btn btn-outline-success btn-sm"
+                    data-toggle="modal" data-target="#idModal"
+                    data-songid="2mZYQC01utmvwynQZVvplL"
+                    data-songimage="https://i.scdn.co/image/8c54f79bbed8ac4af7a270786888c26bca930c42">Klik</button>
+                </td>
+                <td class="align-middle">18:10</td>
+                <td class="align-middle">18:12</td>
+                <td class="align-middle">
+                  <button type="button" data-toggle="modal" data-target="#detailsModal" class="btn btn-outline-primary btn-sm">Klik</button>
+                  <button type="button" class="btn btn-outline-secondary btn-sm">Też klik</button>
+                </td>
+              </tr>
+              <!-- TR -->
+              <!-- TR -->
+              <td>
+                <a href="#" class="float-left .img-thumbnail">
+                              <img src="https://i.scdn.co/image/a149a2f10daf580ccedf10a3cafdb01dc1066871" class="media-photo">
+                              </a>
+              </td>
+              <td class="align-middle"><strong>The Trouble Notes</strong></td>
+              <td class="align-middle">Lose Your Ties</td>
+              <td class="align-middle"><em>Catalonia Calling</em></td>
+              <td class="align-middle">
+                <button
+                  type="button"
+                  class="btn btn-outline-success btn-sm"
+                  data-toggle="modal" data-target="#idModal"
+                  data-songid="2mZYQC01utmvwynQZVvplL"
+                  data-songimage="https://i.scdn.co/image/6c79b4a505bd45a5ca523b8f8c46dc639b7dc34a">Klik</button>
+              </td>
+              <td class="align-middle">18:12</td>
+              <td class="align-middle">18:15</td>
+              <td class="align-middle">
+                <button type="button" data-toggle="modal" data-target="#detailsModal" class="btn btn-outline-primary btn-sm">Klik</button>
+                <button type="button" class="btn btn-outline-secondary btn-sm">Też klik</button>
+              </td>
+              </tr>
+              <!-- TR -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <footer>
+      <p>&#xA9; HSKRK 2018</p>
+    </footer>
+  </div>
+  <!-- /container -->
+
+  <!-- music address modal-->
+
+  <div class="modal fade" id="idModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Namiary na wybrany utwór</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-4">
+                <img src="https://i.scdn.co/image/8c54f79bbed8ac4af7a270786888c26bca930c42" class="img-fluid">
+              </div>
+              <div class="col-8">
+                <h3>
+                  <span id="title">Himna generacije</span>
+                  <small class="text-muted" id="artist">Dubioza kolektiv</small>
+                </h3>
+                <hr>
+                <h5>ID utworu:</h5>
+                <code id="spotifycode">spotify:track:2mZYQC01utmvwynQZVvplL</code>
+                <hr>
+                <h5>Adres do utworu:</h5>
+                <a id="spotifyaddress" href="https://open.spotify.com/track/2mZYQC01utmvwynQZVvplL">https://open.spotify.com/track/2mZYQC01utmvwynQZVvplL</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- music address modal-->
+
+  <!-- music detail modal-->
+
+  <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Namiary na wybrany utwór</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-4">
+                <img src="https://i.scdn.co/image/8c54f79bbed8ac4af7a270786888c26bca930c42" class="img-fluid">
+              </div>
+              <div class="col-8">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque et viverra metus. Donec ex mauris, pretium ut posuere sit amet, rutrum pharetra est. Vivamus blandit fermentum nulla. Aenean elit nulla, rhoncus in ullamcorper ac, dignissim eu erat. Sed ultrices urna ut lorem pretium, dapibus lobortis lectus congue. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vitae tristique enim. Praesent ligula dui, porta a tellus eu, dictum tincidunt ligula. Suspendisse mattis rhoncus dignissim. Sed at nisl id risus ullamcorper pellentesque et a nisi. Etiam massa est, ullamcorper quis laoreet sed, ornare sed velit. Maecenas consectetur risus orci, vel cursus ligula viverra in. Integer at aliquam sem. </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- music detail and address modal-->
+
+  <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="js/vendor/jquery-1.11.2.min.js"></script>
+  <script src="js/bootstrap.js"></script>
+  <script src="js/plugins.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/vendor/popper.js"></script>
+  <!-- <script>
+    var jumboHeight = $('.jumbotron').outerHeight();
+
+    function parallax() {
+      var scrolled = $(window).scrollTop();
+      $('.bg').css('height', (jumboHeight - scrolled) + 'px');
+    }
+
+    $(window).scroll(function(e) {
+      parallax();
+    });
+
+  </script> -->
+
+</body></html>
