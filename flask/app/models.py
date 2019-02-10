@@ -8,6 +8,7 @@ class Song(db.Model):
     player_specific_id = db.Column(db.String(64), index=True, unique=True)
     thumb = db.Column(db.String(64))
     image = db.Column(db.String(64))
+    plays = db.relationship('Play', backref='track', lazy='dynamic')
 
     def __repr__(self):
         return '<Song {}>'.format(self.songid)
@@ -17,7 +18,6 @@ class Play(db.Model):
     songid = db.Column(db.String(64), db.ForeignKey('song.songid'), nullable=False, index=True)
     timefrom = db.Column(db.String(64), index=True)
     timeto = db.Column(db.String(64), index=True)
-
 
     def __repr__(self):
         return '<Play {}>'.format(self.id)
