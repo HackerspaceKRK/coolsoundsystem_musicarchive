@@ -1,28 +1,28 @@
 {% extends "base.html" %}
 
 {% block tracks %}
-    {% for song in songs %}
+    {% for play in plays %}
     <tr>
       <td>
         <a href="#" class="float-left .img-thumbnail">
-                      <img src="{{ song.thumb }}" class="media-photo">
+                      <img src="{{ play.track.thumb }}" class="media-photo">
                       </a>
       </td>
-      <td class="align-middle"><strong>{{ song.artist }}</strong></td>
-      <td class="align-middle">{{ song.album }}</td>
-      <td class="align-middle"><em>{{ song.songname }}</em></td>
+      <td class="align-middle"><strong>{{ play.track.artist }}</strong></td>
+      <td class="align-middle">{{ play.track.album }}</td>
+      <td class="align-middle"><em>{{ play.track.songname }}</em></td>
       <td class="align-middle">
         <button
           type="button"
           class="btn btn-outline-success btn-sm"
           data-toggle="modal" data-target="#idModal"
-          data-songtitle="{{ song.songname }}"
-          data-songartist="{{ song.artist }}"
-          data-songid="{{ song.id }}"
-          data-songimage="{{ song.image }}">Klik</button>
+          data-songtitle="{{ play.track.songname }}"
+          data-songartist="{{ play.track.artist }}"
+          data-songid="{{ play.track.player_specific_id }}"
+          data-songimage="{{ play.track.image }}">Klik</button>
       </td>
-      <td class="align-middle">{{ song.timefrom }}</td>
-      <td class="align-middle">{{ song.timeto }}</td>
+      <td class="align-middle">{{ play.timefrom }}</td>
+      <td class="align-middle">{{ play.timeto }}</td>
       <td class="align-middle">
         <button type="button" data-toggle="modal" data-target="#detailsModal" class="btn btn-outline-primary btn-sm">Klik</button>
         <button type="button" class="btn btn-outline-secondary btn-sm">Też klik</button>

@@ -1,9 +1,15 @@
 from app import app
 from flask import render_template
+from app import db
+from app.models import Song, Play
 
 @app.route('/')
 @app.route('/index')
 def index():
+    s = Song.query.all()
+    p = Play.query.all()
+
+    print(s)
     songs = [
         {
         'artist': 'Dubioza kolektiv',
@@ -17,4 +23,4 @@ def index():
         'timeto': '21:37'
         }
     ]
-    return render_template('index.html', songs=songs)
+    return render_template('index.html', plays=p)
