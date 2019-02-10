@@ -90,6 +90,8 @@ def on_message_music(client, userdata, msg):
 
         if data['content_id'] is not None:
             data.update({'id': hashlib.sha1(data['content_id'].encode('utf-8')).hexdigest()})
+        else:
+            data.update({'id': 'noid'})
 
         handle_song(data, time.time(), last_song)
     except Exception as e:
