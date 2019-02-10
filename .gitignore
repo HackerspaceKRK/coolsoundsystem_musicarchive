@@ -117,3 +117,6 @@ dmypy.json
 
 # pycharm shit
 .idea/
+
+# flasky doo-doo
+app.db
