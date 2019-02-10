@@ -27,17 +27,17 @@ def handle_song(data, timestamp, lastsong):
             lastsong['timestamps']['lastsong_current'] = timestamp
         else:
             songdict = {
-                'songid': data['id'],
-                'artist': data['artist'],
-                'songname': data['title'],
-                'album': data['album'],
-                'player_specific_id': data['content_id'],
-                'thumb': data['images'][64],
-                'image': data['images'][300] if 300 in data['images'] else data['images'][64]
+                'songid': str(lastsong['data']['id']),
+                'artist': str(lastsong['data']['artist']),
+                'songname': str(lastsong['data']['title']),
+                'album': str(lastsong['data']['album']),
+                'player_specific_id': lastsong['data']['content_id'],
+                'thumb': images[64],
+                'image': images[300] if 300 in images else images[64]
             }
 
             playdict = {
-                'songid': data['id'],
+                'songid': lastsong['data']['id'],
                 'timefrom': float(lastsong['timestamps']['lastsong_start']),
                 'timeto': float(lastsong['timestamps']['lastsong_current']),
             }
