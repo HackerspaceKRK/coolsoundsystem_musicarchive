@@ -5,6 +5,11 @@ import json
 import time
 import config
 import hashlib
+import sqlite3
+
+conn = sqlite3.connect('../shared/app.db')
+conn.set_trace_callback(print)
+c = conn.cursor()
 
 idhasher = hashlib.sha1()
 last_song = {
@@ -47,6 +52,10 @@ def handle_song(data, timestamp, lastsong):
             # print(lastsong['timestamps'])
             # print(float(lastsong['timestamps']['lastsong_current']) - float(lastsong['timestamps']['lastsong_start']))
             print('-------------')
+            print(lastsong)
+            c.execute("INSERT or REPLACE INTO song(songid, artist, songname, album, player_specific_id, thumb, image) VALUES (:songid, :artist, :songname, :album, :player_specific_id, :thumb, :image);", songdict)
+            c.execute("INSERT INTO play(songid, timefrom, timeto) VALUES (:songid, :timefrom, :timeto);", playdict)
+            conn.commit()
             # print('Artysta: ' + data['artist'] + ', Tytuł: ' + data['title'] + ', Album: ' + data['album'])
             # print('contentID: ' + data['content_id'] + ', Adres miniaturki: ' + data['images'][64]+ ', Adres obrazka: ' + data['images'][300])
             # print('ID: ' + data['id'])
