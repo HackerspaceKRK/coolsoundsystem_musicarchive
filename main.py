@@ -3,6 +3,7 @@
 from paho.mqtt.client import Client
 import json
 import time
+import config
 
 last_song = {
     'data': {},
@@ -14,7 +15,7 @@ last_song = {
 
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
-    client.subscribe("music/#")
+    client.subscribe(config.GENERAL_TOPIC)
 
 def handle_song(data, timestamp, lastsong):
     if lastsong['data'] == {}:
@@ -66,8 +67,8 @@ def on_message_music(client, userdata, msg):
 client = Client()
 client.on_connect = on_connect
 client.on_message = on_message
-client.message_callback_add('music/chromecast/playing', on_message_music)
+client.message_callback_add(config.SPECIFIC_TOPIC, on_message_music)
 
-client.connect("rudy.at.hskrk.pl", 1883, 60)
+client.connect(config.SERVER_ADDRESS, 1883, 60)
 
 client.loop_forever()
