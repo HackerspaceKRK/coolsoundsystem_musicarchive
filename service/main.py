@@ -10,7 +10,7 @@ idhasher = hashlib.sha1()
 last_song = {
     'data': {},
     'timestamps': {
-        'lastsong_start' : 0,
+        'lastsong_start' : time.time(),
         'lastsong_current' : 0
     }
 }
