@@ -4,7 +4,9 @@ from paho.mqtt.client import Client
 import json
 import time
 import config
+import hashlib
 
+idhasher = hashlib.sha1()
 last_song = {
     'data': {},
     'timestamps': {
@@ -24,10 +26,29 @@ def handle_song(data, timestamp, lastsong):
         if data == lastsong['data']:
             lastsong['timestamps']['lastsong_current'] = timestamp
         else:
-            print(lastsong['timestamps'])
-            print(float(lastsong['timestamps']['lastsong_current']) - float(lastsong['timestamps']['lastsong_start']))
-            print('Artysta: ' + data['artist'] + ', Tytuł: ' + data['title'] + ', Album: ' + data['album'])
-            print('ID: ' + data['content_id'] + ', Adres obrazka: ' + data['image'])
+            songdict = {
+                'songid': data['id'],
+                'artist': data['artist'],
+                'songname': data['title'],
+                'album': data['album'],
+                'player_specific_id': data['content_id'],
+                'thumb': data['images'][64],
+                'image': data['images'][300] if 300 in data['images'] else data['images'][64]
+            }
+
+            playdict = {
+                'songid': data['id'],
+                'timefrom': float(lastsong['timestamps']['lastsong_start']),
+                'timeto': float(lastsong['timestamps']['lastsong_current']),
+            }
+            # print(lastsong['timestamps'])
+            # print(float(lastsong['timestamps']['lastsong_current']) - float(lastsong['timestamps']['lastsong_start']))
+            print('-------------')
+            # print('Artysta: ' + data['artist'] + ', Tytuł: ' + data['title'] + ', Album: ' + data['album'])
+            # print('contentID: ' + data['content_id'] + ', Adres miniaturki: ' + data['images'][64]+ ', Adres obrazka: ' + data['images'][300])
+            # print('ID: ' + data['id'])
+            print(songdict)
+            print(playdict)
             lastsong['data'] = data
             lastsong['timestamps']['lastsong_start'] = lastsong['timestamps']['lastsong_current'] = timestamp
         pass
@@ -57,11 +78,22 @@ def on_message_music(client, userdata, msg):
         data.update(acquire_data(lambda: {'artist': payload['data']['media_metadata']['artist']}, {'artist': 'Brak danych'}))
         data.update(acquire_data(lambda: {'album': payload['data']['media_metadata']['albumName']}, {'album': 'Brak danych'}))
         data.update(acquire_data(lambda: {'content_id': payload['data']['content_id']}, {'content_id': 'Brak danych'}))
-        data.update(acquire_data(lambda: {'image': payload['data']['media_metadata']['images'][0]['url']}, {'image': 'https://sound.at.hskrk.pl/img/silence.jpg'}))
+        data.update(acquire_data(lambda: {'images': payload['data']['media_metadata']['images']}, {'images': []}))
+
+        imagearray = data['images']
+        imagedict = {}
+        if len(imagearray) != 0:
+            for image in imagearray:
+                    imagedict.update({image['height']: image['url']})
+
+            data['images'] = imagedict
+
+        if data['content_id'] is not None:
+            data.update({'id': hashlib.sha1(data['content_id'].encode('utf-8')).hexdigest()})
 
         handle_song(data, time.time(), last_song)
-    except:
-#       print(payload)
+    except Exception as e:
+        print("Exception: " + str(e))
         pass
 
 client = Client()
