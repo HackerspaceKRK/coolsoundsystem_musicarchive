@@ -26,6 +26,9 @@ def handle_song(data, timestamp, lastsong):
         if data == lastsong['data']:
             lastsong['timestamps']['lastsong_current'] = timestamp
         else:
+            images = {}
+            images.update(lastsong['data']['images']) if 64 in lastsong['data']['images'] else images.update({64: config.SILENT_IMAGE_SMALL, 300: config.SILENT_IMAGE_BIG})
+
             songdict = {
                 'songid': str(lastsong['data']['id']),
                 'artist': str(lastsong['data']['artist']),
