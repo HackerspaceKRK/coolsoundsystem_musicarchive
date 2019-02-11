@@ -1,8 +1,8 @@
 """init - songs and plays
 
-Revision ID: 37ed01765b38
+Revision ID: 8f14223bae03
 Revises: 
-Create Date: 2019-02-10 01:27:18.630190
+Create Date: 2019-02-10 22:12:08.087470
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '37ed01765b38'
+revision = '8f14223bae03'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -24,7 +24,6 @@ def upgrade():
     sa.Column('songname', sa.String(length=64), nullable=True),
     sa.Column('album', sa.String(length=64), nullable=True),
     sa.Column('player_specific_id', sa.String(length=64), nullable=True),
-    sa.Column('thumb', sa.String(length=64), nullable=True),
     sa.Column('image', sa.String(length=64), nullable=True),
     sa.PrimaryKeyConstraint('songid')
     )
