@@ -31,8 +31,6 @@ def handle_song(data, timestamp, lastsong):
         if data == lastsong['data']:
             lastsong['timestamps']['lastsong_current'] = timestamp
         else:
-            images = {}
-            images.update(lastsong['data']['images']) if 64 in lastsong['data']['images'] else images.update({64: config.SILENT_IMAGE_SMALL, 300: config.SILENT_IMAGE_BIG})
 
             songdict = {
                 'songid': str(lastsong['data']['id']),
@@ -40,8 +38,7 @@ def handle_song(data, timestamp, lastsong):
                 'songname': str(lastsong['data']['title']),
                 'album': str(lastsong['data']['album']),
                 'player_specific_id': lastsong['data']['content_id'],
-                'thumb': images[64],
-                'image': images[300] if 300 in images else images[64]
+                'image': str(lastsong['data']['image']),
             }
 
             playdict = {
@@ -53,7 +50,7 @@ def handle_song(data, timestamp, lastsong):
             # print(float(lastsong['timestamps']['lastsong_current']) - float(lastsong['timestamps']['lastsong_start']))
             print('-------------')
             print(lastsong)
-            c.execute("INSERT or REPLACE INTO song(songid, artist, songname, album, player_specific_id, thumb, image) VALUES (:songid, :artist, :songname, :album, :player_specific_id, :thumb, :image);", songdict)
+            c.execute("INSERT or REPLACE INTO song(songid, artist, songname, album, player_specific_id, image) VALUES (:songid, :artist, :songname, :album, :player_specific_id, :image);", songdict)
             c.execute("INSERT INTO play(songid, timefrom, timeto) VALUES (:songid, :timefrom, :timeto);", playdict)
             conn.commit()
             # print('Artysta: ' + data['artist'] + ', Tytuł: ' + data['title'] + ', Album: ' + data['album'])
@@ -90,15 +87,7 @@ def on_message_music(client, userdata, msg):
         data.update(acquire_data(lambda: {'artist': payload['data']['media_metadata']['artist']}, {'artist': 'Brak danych'}))
         data.update(acquire_data(lambda: {'album': payload['data']['media_metadata']['albumName']}, {'album': 'Brak danych'}))
         data.update(acquire_data(lambda: {'content_id': payload['data']['content_id']}, {'content_id': 'Brak danych'}))
-        data.update(acquire_data(lambda: {'images': payload['data']['media_metadata']['images']}, {'images': []}))
-
-        imagearray = data['images']
-        imagedict = {}
-        if len(imagearray) != 0:
-            for image in imagearray:
-                    imagedict.update({image['height']: image['url']})
-
-            data['images'] = imagedict
+        data.update(acquire_data(lambda: {'image': payload['data']['media_metadata']['images'][0]['url']}, {'image': config.SILENT_IMAGE_SMALL}))
 
         if data['content_id'] is not None:
             data.update({'id': hashlib.sha1(data['content_id'].encode('utf-8')).hexdigest()})

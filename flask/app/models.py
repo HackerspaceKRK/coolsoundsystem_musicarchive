@@ -6,7 +6,6 @@ class Song(db.Model):
     songname = db.Column(db.String(64))
     album = db.Column(db.String(64))
     player_specific_id = db.Column(db.String(64), index=True, unique=True)
-    thumb = db.Column(db.String(64))
     image = db.Column(db.String(64))
     plays = db.relationship('Play', backref='track', lazy='dynamic')
 
