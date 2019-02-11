@@ -28,10 +28,10 @@
       <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
         <span class="sr-only">Toggle navigation</span>&#x2630;
       </button>
-      <a href="#" class="navbar-brand mr-3">
+      <a href="{{ url_for('index') }}" class="navbar-brand mr-3">
         <img class="" src="https://static.hskrk.pl/avatarb.svg" width="40px">
       </a>
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="{{ url_for('index') }}">
         Co leciało @ hskrk.pl
       </a>
 
@@ -60,6 +60,7 @@
                 <th scope="col">Link/ID</th>
                 <th scope="col">Od</th>
                 <th scope="col">Do</th>
+                <th scope="col">Czas trwania</th>
                 <th scope="col">Inne</th>
               </tr>
             </thead>
@@ -91,34 +92,11 @@
   <!-- music address modal-->
 
   <!-- music detail modal-->
-<!--
-  <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Namiary na wybrany utwór</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col-4">
-                <img src="https://i.scdn.co/image/8c54f79bbed8ac4af7a270786888c26bca930c42" class="img-fluid">
-              </div>
-              <div class="col-8">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque et viverra metus. Donec ex mauris, pretium ut posuere sit amet, rutrum pharetra est. Vivamus blandit fermentum nulla. Aenean elit nulla, rhoncus in ullamcorper ac, dignissim eu erat. Sed ultrices urna ut lorem pretium, dapibus lobortis lectus congue. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vitae tristique enim. Praesent ligula dui, porta a tellus eu, dictum tincidunt ligula. Suspendisse mattis rhoncus dignissim. Sed at nisl id risus ullamcorper pellentesque et a nisi. Etiam massa est, ullamcorper quis laoreet sed, ornare sed velit. Maecenas consectetur risus orci, vel cursus ligula viverra in. Integer at aliquam sem. </div>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div> -->
 
-  <!-- music detail and address modal-->
+  {% include '_detailmodal.html' %}
+
+  <!-- music detail modal-->
+
   <!-- debug modal  -->
 
   {% include '_debugmodal.html' %}
