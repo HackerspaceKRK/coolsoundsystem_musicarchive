@@ -24,8 +24,15 @@
   </td>
   <td id="timefrom" class="align-middle">{{ tf(play.timefrom) }}</td>
   <td id="timeto" class="align-middle">{{ tf(play.timeto) }}</td>
+  <td id="timeto" class="align-middle"> {{ tf(play.timeto) - tf(play.timefrom) }}</td>
   <td id="otherbuttons" class="align-middle">
     <button type="button" data-toggle="modal" data-target="#detailsModal" class="btn btn-outline-primary btn-sm">Klik</button>
-    <button type="button" class="btn btn-outline-secondary btn-sm">Też klik</button>
+    <button
+      type="button"
+      data-toggle="modal"
+      data-target="#debugModal"
+      data-debugplay=" {{ play.data() }}"
+      data-debugsong=" {{ play.track.data() }}"
+      class="btn btn-outline-secondary btn-sm">Debug</button>
   </td>
 </tr>
