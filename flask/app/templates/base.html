@@ -54,9 +54,9 @@
             <thead>
               <tr>
                 <th scope="col"></th>
-                <th scope="col">Autor</th>
-                <th scope="col">Album</th>
                 <th scope="col">Tytuł</th>
+                <th scope="col">Album</th>
+                <th scope="col">Autor</th>
                 <th scope="col">Link/ID</th>
                 <th scope="col">Od</th>
                 <th scope="col">Do</th>
@@ -81,42 +81,7 @@
 
   <!-- music address modal-->
 
-  <div class="modal fade" id="idModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Namiary na wybrany utwór</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col-4">
-                <img id="song-image" src="https://via.placeholder.com/150" class="img-fluid">
-              </div>
-              <div class="col-8">
-                <h3>
-                  <span id="song-title">Dummy title</span>
-                  <small class="text-muted" id="song-artist">Dummy artist</small>
-                </h3>
-                <hr>
-                <h5>ID utworu:</h5>
-                <code id="song-id">dummy-id</code>
-                <hr>
-                <h5>Adres do utworu:</h5>
-                <a id="song-addresss" href="https://open.spotify.com/track/2mZYQC01utmvwynQZVvplL">https://open.spotify.com/track/2mZYQC01utmvwynQZVvplL</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
+  {% include '_infomodal.html' %}
 
   <!-- music address modal-->
 
@@ -160,12 +125,15 @@
     var title = button.data('songtitle')
     var id = button.data('songid')
     var image = button.data('songimage')
+    var address = button.data('songaddress')
     var modal = $(this)
     modal.find('#song-title').text(title)
     modal.find('#song-artist').text(artist)
     modal.find('#song-id').text(id)
     modal.find('#song-image').attr('src', image)
     modal.find('#song-artist').text(artist)
+    modal.find('#song-address').attr('href', address)
+    modal.find('#song-address').text(address)
 
 
   })
