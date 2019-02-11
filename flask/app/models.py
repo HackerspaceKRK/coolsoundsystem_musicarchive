@@ -12,6 +12,16 @@ class Song(db.Model):
     def __repr__(self):
         return '<Song {}>'.format(self.songid)
 
+    def data(self):
+        return {
+                    'songid': self.songid,
+                    'artist': self.artist,
+                    'songname': self.songname,
+                    'album': self.album,
+                    'player_specific_id': self.player_specific_id,
+                    'image': self.image
+                }
+
 class Play(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     songid = db.Column(db.String(64), db.ForeignKey('song.songid'), nullable=False, index=True)
@@ -20,6 +30,14 @@ class Play(db.Model):
 
     def __repr__(self):
         return '<Play {}>'.format(self.id)
+
+    def data(self):
+        return {
+                    'id': self.id,
+                    'songid': self.songid,
+                    'timefrom': self.timefrom,
+                    'timeto': self.timeto
+                }
 
     # songs = [
     #     {
