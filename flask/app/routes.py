@@ -7,7 +7,7 @@ from app.models import Song, Play
 from datetime import datetime
 
 # more clumsiness with global variables ahead
-idblacklist=[None, 'spotify:music:content']
+idblacklist=[None, 'spotify:music:content', 'Brak danych']
 
 # even clumsier function to pass to jinja template
 def getnormaltime(t):
