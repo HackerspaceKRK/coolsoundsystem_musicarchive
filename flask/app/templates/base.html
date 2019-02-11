@@ -119,8 +119,11 @@
   </div> -->
 
   <!-- music detail and address modal-->
+  <!-- debug modal  -->
 
+  {% include '_debugmodal.html' %}
 
+  <!-- debug modal  -->
 
   <script>
 
@@ -141,6 +144,19 @@
     modal.find('#song-address').text(address)
 
 
+  })
+
+  </script>
+
+  <script>
+
+  $('#debugModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Button that triggered the modal
+    var debugsong = button.data('debugsong') // Extract info from data-* attributes
+    var debugplay = button.data('debugplay') // Extract info from data-* attributes
+    var modal = $(this)
+    modal.find('#debug-song').text(debugsong)
+    modal.find('#debug-play').text(debugplay)
   })
 
   </script>
