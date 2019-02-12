@@ -1,18 +1,47 @@
 {% extends "base.html" %}
 
-{% block tracks %}
-    {% for play in plays %}
-      {% if play.track.player_specific_id not in bl %}
-        {% include '_song.html' %}
-        {% include '_infomodal.html' %}
-        {% if debug %}
-          {% include '_debugmodal.html' %}
-        {% endif %}
-      {% else %}
-        {% include '_notasong.html' %}
-        {% if debug %}
-          {% include '_debugmodal.html' %}
-        {% endif %}
-      {% endif %}
-    {% endfor %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Tytuł</th>
+            <th scope="col">Album</th>
+            <th scope="col">Autor</th>
+            <th scope="col">Link/ID</th>
+            <th scope="col">Od</th>
+            <th scope="col">Do</th>
+            <th scope="col">Czas trwania</th>
+            <th scope="col">Inne</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for play in plays %}
+            {% if play.track.player_specific_id not in bl %}
+              {% include '_song.html' %}
+              {% include '_infomodal.html' %}
+              {% if debug %}
+                {% include '_debugmodal.html' %}
+              {% endif %}
+            {% else %}
+              {% include '_notasong.html' %}
+              {% if debug %}
+                {% include '_debugmodal.html' %}
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+    {% include '_pagination.html' %}
+    </div>
+  </div>
+</div>
+
 {% endblock %}

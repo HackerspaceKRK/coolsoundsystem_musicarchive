@@ -58,38 +58,7 @@
     </div>
   </div>
   <div class="container">
-    <!-- Example row of columns -->
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th scope="col"></th>
-                <th scope="col">Tytuł</th>
-                <th scope="col">Album</th>
-                <th scope="col">Autor</th>
-                <th scope="col">Link/ID</th>
-                <th scope="col">Od</th>
-                <th scope="col">Do</th>
-                <th scope="col">Czas trwania</th>
-                <th scope="col">Inne</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- TR -->
-                {% block tracks %}{% endblock %}
-              <!-- TR -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-        {% include '_pagination.html' %}
-        </div>
-      </div>
-    </div>
+    {% block content %}{% endblock %}
     <hr>
     <footer>
       <p>&#xA9; HSKRK 2018</p>
