@@ -17,9 +17,27 @@ def getnormaltime(t):
 @app.route('/index', methods=['GET', 'POST'])
 def index():
     page = request.args.get('page', 1, type=int)
-    print(page)
-    p = Play.query.order_by(Play.timefrom.desc()).paginate(page, app.config['PLAYS_ON_INDEX_PER_PAGE'], False)
-    next_url = url_for('index', page=p.next_num) if p.has_next else None
-    prev_url = url_for('index', page=p.prev_num) if p.has_prev else None
+    debug = request.args.get('debug', 0, type=int)
+    idcount = {}
+    lastplay = {}
 
-    return render_template('index.html', plays=p.items, playsobj=p, bl=idblacklist, tf=getnormaltime, next_url=next_url, prev_url=prev_url)
+    p = Play.query.order_by(Play.timefrom.desc()).paginate(page, app.config['PLAYS_ON_INDEX_PER_PAGE'], False)
+
+    for item in p.items:
+        count = Play.query.filter_by(songid=item.songid).order_by(Play.timefrom.desc()).all()
+        idcount.update({item.songid: len(count)})
+        lastplay.update({item.songid: count[0].data()})
+
+    next_url = url_for('index', page=p.next_num, debug=debug) if p.has_next else None
+    prev_url = url_for('index', page=p.prev_num, debug=debug) if p.has_prev else None
+
+    return render_template('index.html',
+                           plays=p.items,
+                           counts=idcount,
+                           lastplay=lastplay,
+                           playsobj=p,
+                           bl=idblacklist,
+                           tf=getnormaltime,
+                           debug=debug,
+                           next_url=next_url,
+                           prev_url=prev_url)
