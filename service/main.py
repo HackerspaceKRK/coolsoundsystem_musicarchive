@@ -8,10 +8,9 @@ import hashlib
 import sqlite3
 
 conn = sqlite3.connect('../shared/app.db')
-conn.set_trace_callback(print)
+# conn.set_trace_callback(print)
 c = conn.cursor()
 
-idhasher = hashlib.sha1()
 last_song = {
     'data': {},
     'timestamps': {
@@ -34,9 +33,9 @@ def handle_song(data, timestamp, lastsong):
 
             songdict = {
                 'songid': str(lastsong['data']['id']),
-                'artist': str(lastsong['data']['artist']),
+                'artistid': str(lastsong['data']['artistid']),
                 'songname': str(lastsong['data']['title']),
-                'album': str(lastsong['data']['album']),
+                'albumid': str(lastsong['data']['albumid']),
                 'player_specific_id': lastsong['data']['content_id'],
                 'image': str(lastsong['data']['image']),
             }
@@ -46,12 +45,32 @@ def handle_song(data, timestamp, lastsong):
                 'timefrom': float(lastsong['timestamps']['lastsong_start']),
                 'timeto': float(lastsong['timestamps']['lastsong_current']),
             }
+
+            albumdict = {
+                'albumid': lastsong['data']['albumid'],
+                'albumname': lastsong['data']['album'],
+                'artistid': lastsong['data']['artistid'],
+            }
+
+            artistdict = {
+                'artistid': lastsong['data']['artistid'],
+                'artistname': lastsong['data']['artist']
+            }
             # print(lastsong['timestamps'])
             # print(float(lastsong['timestamps']['lastsong_current']) - float(lastsong['timestamps']['lastsong_start']))
             print('-------------')
-            print(lastsong)
-            c.execute("INSERT or REPLACE INTO song(songid, artist, songname, album, player_specific_id, image) VALUES (:songid, :artist, :songname, :album, :player_specific_id, :image);", songdict)
-            c.execute("INSERT INTO play(songid, timefrom, timeto) VALUES (:songid, :timefrom, :timeto);", playdict)
+            # print(lastsong)
+            c.execute("INSERT or REPLACE INTO song(songid, artistid, songname, albumid, player_specific_id, image) VALUES (:songid, :artistid, :songname, :albumid, :player_specific_id, :image);", songdict)
+            c.execute("INSERT or REPLACE INTO artist(artistid, artistname) VALUES (:artistid, :artistname);", artistdict)
+            c.execute("INSERT or REPLACE INTO album(albumid, albumname, artistid) VALUES (:albumid, :albumname, :artistid);", albumdict)
+
+            if(playdict['timefrom'] != 0):
+                if(playdict['timeto']- playdict['timefrom'] > 10):
+                    c.execute("INSERT INTO play(songid, timefrom, timeto) VALUES (:songid, :timefrom, :timeto);", playdict)
+                else:
+                    print('play too short to save, probably skipping through playlist')
+            else:
+                print('invalid timefrom')
             conn.commit()
             # print('Artysta: ' + data['artist'] + ', Tytuł: ' + data['title'] + ', Album: ' + data['album'])
             # print('contentID: ' + data['content_id'] + ', Adres miniaturki: ' + data['images'][64]+ ', Adres obrazka: ' + data['images'][300])
@@ -93,6 +112,16 @@ def on_message_music(client, userdata, msg):
             data.update({'id': hashlib.sha1(data['content_id'].encode('utf-8')).hexdigest()})
         else:
             data.update({'id': 'noid'})
+
+        if data['artist'] is not None:
+            data.update({'artistid': hashlib.sha1(data['artist'].encode('utf-8')).hexdigest()})
+        else:
+            data.update({'artistid': 'noid'})
+
+        if data['album'] is not None:
+            data.update({'albumid': hashlib.sha1(data['album'].encode('utf-8')).hexdigest()})
+        else:
+            data.update({'albumid': 'noid'})
 
         handle_song(data, time.time(), last_song)
     except Exception as e:

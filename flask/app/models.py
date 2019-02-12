@@ -2,12 +2,12 @@ from app import db
 
 class Song(db.Model):
     songid = db.Column(db.String(64), primary_key=True)
-    artist = db.Column(db.String(64))
+    artistid = db.Column(db.String(64), db.ForeignKey('artist.artistid'), nullable=False, index=True) # one artist to many songs
     songname = db.Column(db.String(64))
-    album = db.Column(db.String(64))
+    albumid = db.Column(db.String(64), db.ForeignKey('album.albumid'), nullable=False, index=True) # one album to many songs
     player_specific_id = db.Column(db.String(64), index=True, unique=True)
     image = db.Column(db.String(64))
-    plays = db.relationship('Play', backref='track', lazy='dynamic')
+    plays = db.relationship('Play', backref='track', lazy='dynamic') # many plays to one song
 
     def __repr__(self):
         return '<Song {}>'.format(self.songid)
@@ -38,6 +38,38 @@ class Play(db.Model):
                     'timefrom': self.timefrom,
                     'timeto': self.timeto
                 }
+
+class Artist(db.Model):
+    artistid = db.Column(db.String(64), primary_key=True)
+    artistname = db.Column(db.String(64), index=True, unique=True)
+    albums = db.relationship('Album', backref='artist', lazy='dynamic') # many albums to one artist
+    songs = db.relationship('Song', backref='artist', lazy='dynamic') # many songs to one artist
+
+    def __repr__(self):
+        return '<Artist {}>'.format(self.id)
+
+    def data(self):
+        return {
+                    'artistid': self.artistid,
+                    'artistname': self.artistname
+                }
+
+class Album(db.Model):
+    albumid = db.Column(db.String(64), primary_key=True)
+    albumname = db.Column(db.String(64), index=True, unique=True)
+    artistid = db.Column(db.String(64), db.ForeignKey('artist.artistid'), nullable=False, index=True) # one artist to many albums
+    songs = db.relationship('Song', backref='album', lazy='dynamic') # many songs to one album
+
+    def __repr__(self):
+        return '<Album {}>'.format(self.id)
+
+    def data(self):
+        return {
+                    'albumid': self.albumid,
+                    'albumname': self.albumname
+                }
+
+
 
     # songs = [
     #     {
