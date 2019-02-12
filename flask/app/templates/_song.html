@@ -11,16 +11,7 @@
     <button
       type="button"
       class="btn btn-outline-success btn-sm"
-      data-toggle="modal" data-target="#idModal"
-      data-songtitle="{{ play.track.songname }}"
-      data-songartist="{{ play.track.artist }}"
-      data-songid="{{ play.track.player_specific_id }}"
-      {% if 'spotify' in play.track.player_specific_id %}
-      data-songaddress="https://open.spotify.com/track/{{ play.track.player_specific_id.split(':')[2] }}"
-      {% else %}
-      data-songaddress="#"
-      {% endif %}
-      data-songimage="{{ play.track.image }}">Info</button>
+      data-toggle="modal" data-target="#infoModal-{{ play.id }}">Info</button>
   </td>
   <td id="timefrom" class="align-middle">{{ tf(play.timefrom) }}</td>
   <td id="timeto" class="align-middle">{{ tf(play.timeto) }}</td>

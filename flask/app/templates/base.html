@@ -85,12 +85,6 @@
   </div>
   <!-- /container -->
 
-  <!-- music address modal-->
-
-  {% include '_infomodal.html' %}
-
-  <!-- music address modal-->
-
   <!-- music detail modal-->
 
   {% include '_detailmodal.html' %}
@@ -102,29 +96,6 @@
   {% include '_debugmodal.html' %}
 
   <!-- debug modal  -->
-
-  <script>
-
-  $('#idModal').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget) // Button that triggered the modal
-    var artist = button.data('songartist') // Extract info from data-* attributes
-    var title = button.data('songtitle')
-    var id = button.data('songid')
-    var image = button.data('songimage')
-    var address = button.data('songaddress')
-    var modal = $(this)
-    modal.find('#song-title').text(title)
-    modal.find('#song-artist').text(artist)
-    modal.find('#song-id').text(id)
-    modal.find('#song-image').attr('src', image)
-    modal.find('#song-artist').text(artist)
-    modal.find('#song-address').attr('href', address)
-    modal.find('#song-address').text(address)
-
-
-  })
-
-  </script>
 
   <script>
 
