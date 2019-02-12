@@ -6,4 +6,4 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, '../shared/app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    PLAYS_ON_INDEX_PER_PAGE = 3
+    PLAYS_ON_INDEX_PER_PAGE = 15
