@@ -1,4 +1,4 @@
-<div class="modal fade" id="debugModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="debugModal-{{ play.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -13,11 +13,11 @@
             <div class="col-12">
               <h3>Song data</h3>
               <hr>
-              <code id="debug-song">dummy-text</code>
+              <code id="debug-song">{{ play.track.data() }}</code>
               <hr>
               <h3>Play data</h3>
               <hr>
-              <code id="debug-play">dummy-text</code>
+              <code id="debug-play">{{ play.data() }}</code>
             </div>
           </div>
         </div>

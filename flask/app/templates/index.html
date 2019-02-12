@@ -5,6 +5,7 @@
       {% if play.track.player_specific_id not in bl %}
         {% include '_song.html' %}
         {% include '_infomodal.html' %}
+        {% include '_debugmodal.html' %}
       {% else %}
         {% include '_notasong.html' %}
       {% endif %}
