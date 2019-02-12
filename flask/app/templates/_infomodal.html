@@ -30,6 +30,40 @@
               {% endif %}
             </div>
           </div>
+          <hr>
+          <div class="row">
+            <div class="col-4">
+              <h6>Ostatnio odtwarzany:</h6>
+            </div>
+            <div class="col-8">
+              {{ tf(lastplay[play.songid]['timefrom']) }} do {{ tf(lastplay[play.songid]['timeto']) }} (czas trwania: {{ tf(lastplay[play.songid]['timeto']) - tf(lastplay[play.songid]['timefrom']) }})
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-4">
+              <h6>Ogółem odtwarzany</h6>
+            </div>
+            <div class="col-8">
+              {% if counts[play.songid] %}
+                {{ counts[play.songid] }}
+                {% if counts[play.songid] < 2%}
+                  raz.
+                {% else %}
+                  razy.
+                {% endif %}
+              {% endif %}
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-4">
+              <h6>Statystyki</h6>
+            </div>
+            <div class="col-8">
+              <a href="#">Utworu</a> | <a href="#">Albumu</a> | <a href="#">Wykonawcy</a>
+            </div>
+          </div>
         </div>
       </div>
       <div class="modal-footer">
