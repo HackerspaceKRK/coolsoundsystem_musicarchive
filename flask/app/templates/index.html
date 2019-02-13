@@ -22,15 +22,8 @@
           {% for play in plays %}
             {% if play.track.player_specific_id not in bl %}
               {% include '_song.html' %}
-              {% include '_infomodal.html' %}
-              {% if debug %}
-                {% include '_debugmodal.html' %}
-              {% endif %}
             {% else %}
               {% include '_notasong.html' %}
-              {% if debug %}
-                {% include '_debugmodal.html' %}
-              {% endif %}
             {% endif %}
           {% endfor %}
         </tbody>
@@ -43,5 +36,22 @@
     </div>
   </div>
 </div>
+
+{% endblock %}
+
+{% block modals %}
+
+{% for play in plays %}
+  {% if play.track.player_specific_id not in bl %}
+    {% include '_infomodal.html' %}
+    {% if debug %}
+      {% include '_debugmodal.html' %}
+    {% endif %}
+  {% else %}
+    {% if debug %}
+      {% include '_debugmodal.html' %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
 
 {% endblock %}

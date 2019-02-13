@@ -1,22 +1,22 @@
 <tr>
   <td>
     <a href="#" class="float-left .img-thumbnail">
-                  <img src="{{ play.track.image }}" width="64" class="media-photo">
+                  <img src="{{ play.track.image }}" width="64" class="media-photo" alt="Album cover">
                   </a>
   </td>
-  <td id="songname" class="align-middle"><strong>{{ play.track.songname }}</strong></td>
-  <td id="album" class="align-middle">{{ play.track.album.albumname }}</td>
-  <td id="artist" class="align-middle"><em>{{ play.track.artist.artistname }}</em></td>
-  <td id="infobutton" class="align-middle">
+  <td class="songname align-middle"><strong>{{ play.track.songname }}</strong></td>
+  <td class="album align-middle">{{ play.track.album.albumname }}</td>
+  <td class="artist align-middle"><em>{{ play.track.artist.artistname }}</em></td>
+  <td class="infobutton align-middle">
     <button
       type="button"
       class="btn btn-outline-success btn-sm"
       data-toggle="modal" data-target="#infoModal-{{ play.id }}">Info</button>
   </td>
-  <td id="timefrom" class="align-middle">{{ tf(play.timefrom) }}</td>
-  <td id="timeto" class="align-middle">{{ tf(play.timeto) }}</td>
-  <td id="timeto" class="align-middle"> {{ tf(play.timeto) - tf(play.timefrom) }}</td>
-  <td id="otherbuttons" class="align-middle">
+  <td class="timefrom align-middle">{{ tf(play.timefrom) }}</td>
+  <td class="timeto align-middle">{{ tf(play.timeto) }}</td>
+  <td class="timeto align-middle"> {{ tf(play.timeto) - tf(play.timefrom) }}</td>
+  <td class="otherbuttons align-middle">
     <button type="button" data-toggle="modal" data-target="#detailsModal" class="btn btn-outline-primary btn-sm">Klik</button>
 {% if debug %}
     <button

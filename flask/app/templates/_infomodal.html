@@ -1,8 +1,8 @@
-<div class="modal fade" id="infoModal-{{ play.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="infoModal-{{ play.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel-{{ play.id }}" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Informacje o utworze:</h5>
+        <h5 class="modal-title" id="exampleModalLabel-{{ play.id }}">Informacje o utworze:</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -11,20 +11,20 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-4">
-              <img id="song-image" src="{{ play.track.image }}" class="img-fluid">
+              <img src="{{ play.track.image }}" class="song-image img-fluid" alt="Album cover of song from play {{ play.id }}">
             </div>
             <div class="col-8">
               <h3>
-                <span id="song-title">{{ play.track.songname }}</span>
-                <small class="text-muted" id="song-artist">{{ play.track.artist.artistname }}</small>
+                <span class="song-title">{{ play.track.songname }}</span>
+                <small class="text-muted song-artist">{{ play.track.artist.artistname }}</small>
               </h3>
               <hr>
               <h6>ID utworu:</h6>
-              <code id="song-id">{{ play.track.player_specific_id }}</code>
+              <code class="song-id">{{ play.track.player_specific_id }}</code>
               <hr>
               <h6>Adres do utworu:</h6>
               {% if 'spotify' in play.track.player_specific_id %}
-              <a id="song-address" href="https://open.spotify.com/track/{{ play.track.player_specific_id.split(':')[2] }}">https://open.spotify.com/track/{{ play.track.player_specific_id.split(':')[2] }}</a>
+              <a class="song-address" href="https://open.spotify.com/track/{{ play.track.player_specific_id.split(':')[2] }}">https://open.spotify.com/track/{{ play.track.player_specific_id.split(':')[2] }}</a>
               {% else %}
               Brak
               {% endif %}
