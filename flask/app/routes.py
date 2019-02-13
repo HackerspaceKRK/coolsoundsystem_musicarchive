@@ -41,3 +41,15 @@ def index():
                            debug=debug,
                            next_url=next_url,
                            prev_url=prev_url)
+
+@app.route('/song/<songid>')
+def song(songid):
+    return render_template('song.html')
+
+@app.route('/artist/<artistid>')
+def artist(artistid):
+    return render_template('artist.html')
+
+@app.route('/album/<albumid>')
+def album(albumid):
+    return render_template('album.html')
