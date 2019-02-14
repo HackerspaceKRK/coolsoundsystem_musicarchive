@@ -4,7 +4,11 @@
                   <img src="{{ play.track.album.cover }}" width="64" class="media-photo" alt="Album cover">
                   </a>
   </td>
-  <td class="songname align-middle"><strong>{{ play.track.songname }}</strong></td>
+  <td class="songname align-middle">
+    <a href="{{ url_for('song', songid=play.songid)}}">
+      <strong>{{ play.track.songname }}</strong>
+    </a>
+  </td>
   <td class="album align-middle">{{ play.track.album.albumname }}</td>
   <td class="artist align-middle"><em>{{ play.track.artist.artistname }}</em></td>
   <td class="infobutton align-middle">
