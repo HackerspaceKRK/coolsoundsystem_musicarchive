@@ -1,0 +1,47 @@
+{
+  "external_urls": {
+    "spotify": "https://open.spotify.com/artist/3CkvROUTQ6nRi9yQOcsB50"
+  },
+  "followers": {
+    "href": null,
+    "total": 1272892
+  },
+  "genres": [
+    "album rock",
+    "art rock",
+    "classic rock",
+    "mellow gold",
+    "progressive rock",
+    "rock",
+    "soft rock",
+    "symphonic rock"
+  ],
+  "href": "https://api.spotify.com/v1/artists/3CkvROUTQ6nRi9yQOcsB50",
+  "id": "3CkvROUTQ6nRi9yQOcsB50",
+  "images": [
+    {
+      "height": 693,
+      "url": "https://i.scdn.co/image/c42f3ed56e0eb156b63526faf69dd7dcd8ede34a",
+      "width": 1000
+    },
+    {
+      "height": 443,
+      "url": "https://i.scdn.co/image/bcb639314c7dc75942f48c14a01cbc5d96d8e53c",
+      "width": 640
+    },
+    {
+      "height": 139,
+      "url": "https://i.scdn.co/image/0f779af8caa96007c18d3ceef9007c6df6af1a20",
+      "width": 200
+    },
+    {
+      "height": 44,
+      "url": "https://i.scdn.co/image/6a5a71228dbb4bd49c33d4731907c511dc0057be",
+      "width": 64
+    }
+  ],
+  "name": "Genesis",
+  "popularity": 68,
+  "type": "artist",
+  "uri": "spotify:artist:3CkvROUTQ6nRi9yQOcsB50"
+}
