@@ -7,3 +7,4 @@ class Config(object):
         'sqlite:///' + os.path.join(basedir, '../shared/app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     PLAYS_ON_INDEX_PER_PAGE = 15
+    LANG='pl'

@@ -16,7 +16,11 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/js/bootstrap.min.js" integrity="sha384-7aThvCh9TypR7fIc2HV4O/nFMVCBwyIUKL8XCtKE+8xgCgl/PQGuFsvShjr74PBp" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <!-- CDN css/scripts -->
-
+  <!-- Own css/js snippets -->
+  {{ moment.include_moment() }}
+  {{ moment.lang(config['LANG']) }}
+  <script>moment.relativeTimeThreshold('h', 24);</script>
+  <!-- Own css/js snippets -->
   <!-- Own css/scripts -->
   <script src="{{ url_for('static', filename='js/main.js')}}"></script>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}">

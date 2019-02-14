@@ -44,7 +44,8 @@ def index():
 
 @app.route('/song/<songid>')
 def song(songid):
-    return render_template('song.html')
+    songdata = Song.query.get(songid)
+    return render_template('song.html', songdata=songdata)
 
 @app.route('/artist/<artistid>')
 def artist(artistid):
