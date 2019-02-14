@@ -16,14 +16,13 @@
   <td class="timefrom align-middle">{{ tf(play.timefrom) }}</td>
   <td class="timeto align-middle">{{ tf(play.timeto) }}</td>
   <td class="timeto align-middle"> {{ tf(play.timeto) - tf(play.timefrom) }}</td>
+  {% if debug %}
   <td class="otherbuttons align-middle">
-    <button type="button" data-toggle="modal" data-target="#detailsModal" class="btn btn-outline-primary btn-sm">Klik</button>
-{% if debug %}
     <button
       type="button"
       data-toggle="modal"
       data-target="#debugModal-{{ play.id }}"
       class="btn btn-outline-secondary btn-sm">Debug</button>
-{% endif %}
   </td>
+  {% endif %}
 </tr>
