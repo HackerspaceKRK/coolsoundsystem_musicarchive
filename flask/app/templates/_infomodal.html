@@ -36,7 +36,10 @@
               <h6>Ostatnio odtwarzany:</h6>
             </div>
             <div class="col-8">
-              {{ tf(lastplay[play.songid]['timefrom']) }} do {{ tf(lastplay[play.songid]['timeto']) }} (czas trwania: {{ tf(lastplay[play.songid]['timeto']) - tf(lastplay[play.songid]['timefrom']) }})
+              {{ moment(tf(lastplay[play.songid]['timefrom'])).fromNow() }},
+              {{ moment(tf(lastplay[play.songid]['timefrom'])).calendar() }}
+              do {{ moment(tf(lastplay[play.songid]['timeto'])).calendar() }}
+              (czas trwania: {{ tf(lastplay[play.songid]['timeto']) - tf(lastplay[play.songid]['timefrom']) }})
             </div>
           </div>
           <hr>
