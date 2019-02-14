@@ -6,7 +6,6 @@ class Song(db.Model):
     songname = db.Column(db.String(64))
     albumid = db.Column(db.String(64), db.ForeignKey('album.albumid'), nullable=False, index=True) # one album to many songs
     player_specific_id = db.Column(db.String(64), index=True, unique=True)
-    image = db.Column(db.String(64))
     plays = db.relationship('Play', backref='track', lazy='dynamic') # many plays to one song
 
     def __repr__(self):
@@ -15,11 +14,10 @@ class Song(db.Model):
     def data(self):
         return {
                     'songid': self.songid,
-                    'artist': self.artist,
+                    'artistid': self.artistid,
                     'songname': self.songname,
-                    'album': self.album,
+                    'albumid': self.albumid,
                     'player_specific_id': self.player_specific_id,
-                    'image': self.image
                 }
 
 class Play(db.Model):
@@ -58,6 +56,7 @@ class Album(db.Model):
     albumid = db.Column(db.String(64), primary_key=True)
     albumname = db.Column(db.String(64), index=True, unique=True)
     artistid = db.Column(db.String(64), db.ForeignKey('artist.artistid'), nullable=False, index=True) # one artist to many albums
+    cover = db.Column(db.String(64), index=True)
     songs = db.relationship('Song', backref='album', lazy='dynamic') # many songs to one album
 
     def __repr__(self):
@@ -67,6 +66,7 @@ class Album(db.Model):
         return {
                     'albumid': self.albumid,
                     'albumname': self.albumname
+                    'cover': self.cover
                 }
 
 

@@ -50,6 +50,7 @@ def handle_song(data, timestamp, lastsong):
                 'albumid': lastsong['data']['albumid'],
                 'albumname': lastsong['data']['album'],
                 'artistid': lastsong['data']['artistid'],
+                'cover': lastsong['data']['image']
             }
 
             artistdict = {
@@ -60,9 +61,9 @@ def handle_song(data, timestamp, lastsong):
             # print(float(lastsong['timestamps']['lastsong_current']) - float(lastsong['timestamps']['lastsong_start']))
             print('-------------')
             # print(lastsong)
-            c.execute("INSERT or REPLACE INTO song(songid, artistid, songname, albumid, player_specific_id, image) VALUES (:songid, :artistid, :songname, :albumid, :player_specific_id, :image);", songdict)
+                c.execute("INSERT or REPLACE INTO song(songid, artistid, songname, albumid, player_specific_id) VALUES (:songid, :artistid, :songname, :albumid, :player_specific_id);", songdict)
             c.execute("INSERT or REPLACE INTO artist(artistid, artistname) VALUES (:artistid, :artistname);", artistdict)
-            c.execute("INSERT or REPLACE INTO album(albumid, albumname, artistid) VALUES (:albumid, :albumname, :artistid);", albumdict)
+            c.execute("INSERT or REPLACE INTO album(albumid, albumname, artistid, cover) VALUES (:albumid, :albumname, :artistid, :cover);", albumdict)
 
             if(playdict['timefrom'] != 0):
                 if(playdict['timeto']- playdict['timefrom'] > 10):
