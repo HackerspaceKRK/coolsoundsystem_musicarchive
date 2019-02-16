@@ -45,13 +45,13 @@
 
 {% for play in plays %}
   {% if play.track.player_specific_id not in bl %}
-    {% include '_infomodal.html' %}
+    {% include 'modals/_infomodal.html' %}
     {% if debug %}
-      {% include '_debugmodal.html' %}
+      {% include 'modals/_debugmodal.html' %}
     {% endif %}
   {% else %}
     {% if debug %}
-      {% include '_debugmodal.html' %}
+      {% include 'modals/_debugmodal.html' %}
     {% endif %}
   {% endif %}
 {% endfor %}
