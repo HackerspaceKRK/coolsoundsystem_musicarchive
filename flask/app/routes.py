@@ -1,7 +1,7 @@
 from app import app
 from flask import render_template, url_for, request
 from app import db
-from app.models import Song, Play
+from app.models import Song, Play, Album, Artist, SpotifySongData
 
 # clumsy import
 from datetime import datetime
@@ -14,6 +14,11 @@ def getnormaltime(t):
     return datetime.fromtimestamp(int(float(t)))
 
 @app.route('/')
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
 @app.route('/index', methods=['GET', 'POST'])
 def index():
     page = request.args.get('page', 1, type=int)
@@ -45,12 +50,22 @@ def index():
 @app.route('/song/<songid>')
 def song(songid):
     songdata = Song.query.get(songid)
-    return render_template('song.html', songdata=songdata)
-
-@app.route('/artist/<artistid>')
-def artist(artistid):
-    return render_template('artist.html')
+    spotifysongdata = SpotifySongData.query.get(songid)
+    albumdata = Album.query.get(songdata.albumid)
+    artistdata = Artist.query.get(songdata.artistid)
+    songplays = Play.query.filter_by(songid=songid).all()
+    return render_template('song.html', songdata=songdata, spotifysongdata=spotifysongdata, albumdata=albumdata, artistdata=artistdata)
 
 @app.route('/album/<albumid>')
 def album(albumid):
-    return render_template('album.html')
+    albumdata = Album.query.get(albumid)
+    artistdata = Artist.query.get(albumdata.artistid)
+    songsofalbum = Song.query.filter_by(albumid=albumid).all()
+    return render_template('album.html', albumdata=albumdata, artistdata=artistdata, songsofalbum=songsofalbum)
+
+@app.route('/artist/<artistid>')
+def artist(artistid):
+    artistdata = Artist.query.get(artistid)
+    albumsofartist = Album.query.filter_by(artistid=artistid).all()
+    songsofartist = Song.query.filter_by(artistid=artistid).all()
+    return render_template('artist.html', artistdata=artistdata, albumsofartist=albumsofartist, songsofartist=songsofartist)

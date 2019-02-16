@@ -1,25 +1,33 @@
 <tr>
   <td>
-    <a href="#" class="float-left .img-thumbnail">
+    <a href="{{ url_for('song', songid=play.songid) }}" class="float-left .img-thumbnail">
                   <img src="{{ play.track.album.cover }}" width="64" class="media-photo" alt="Album cover">
                   </a>
   </td>
   <td class="songname align-middle">
-    <a href="{{ url_for('song', songid=play.songid)}}">
+    <a href="{{ url_for('song', songid=play.songid) }}">
       <strong>{{ play.track.songname }}</strong>
     </a>
   </td>
-  <td class="album align-middle">{{ play.track.album.albumname }}</td>
-  <td class="artist align-middle"><em>{{ play.track.artist.artistname }}</em></td>
-  <td class="infobutton align-middle">
-    <button
-      type="button"
-      class="btn btn-outline-success btn-sm"
-      data-toggle="modal" data-target="#infoModal-{{ play.id }}">Info</button>
+  <td class="album align-middle">
+    <a href="{{ url_for('album', albumid=play.track.albumid)}}">
+      {{ play.track.album.albumname }}
+    </a>
+  </td>
+  <td class="artist align-middle">
+    <a href="{{ url_for('artist', artistid=play.track.artistid)}}">
+      <em>{{ play.track.artist.artistname }}</em>
+    </a>
   </td>
   <td class="timefrom align-middle">{{ moment(tf(play.timefrom)).format("LLLL") }}</td>
   <td class="timeto align-middle">{{ moment(tf(play.timeto)).format("LLLL") }}</td>
   <td class="timeto align-middle"> {{ tf(play.timeto) - tf(play.timefrom) }}</td>
+  <td class="infobutton align-middle">
+    <button
+    type="button"
+    class="btn btn-outline-success btn-sm"
+    data-toggle="modal" data-target="#infoModal-{{ play.id }}">Info</button>
+  </td>
   {% if debug %}
   <td class="otherbuttons align-middle">
     <button

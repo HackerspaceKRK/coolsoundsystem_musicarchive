@@ -6,12 +6,54 @@
   <hr>
   <div class="row">
     <div class="col-4">
-      <img src="{{ songdata.album.cover }}"></img>
+      <img src="{{ songdata.album.cover }}" width="100%"></img>
+      <hr>
+      <img src="{{ artistdata.image }}" width="100%"></img>
     </div>
     <div class="col-8">
-      <h1>{{ songdata.songname }}</h1>
+      <h3>
+        <span class="song-title">{{ songdata.songname }}</span>
+        <small class="text-muted song-artist">{{ artistdata.artistname }}</small>
+      </h3>
+      <hr>
+      <h5>
+        <div class="row">
+          <div class="col-4"><span class="album-title">Album:</span></div>
+          <div class="col-8"><small class="text-muted song-artist">{{ albumdata.albumname }}</small></div>
+        </div>
+      </h5>
+      <h5>
+        <div class="row">
+          <div class="col-4"><span class="album-title">Popularność albumu:</span></div>
+          <div class="col-8"><div class="progress" style="height:100%;"><div class="progress-bar" role="progressbar" style="width: {{albumdata.popularity}}%;" aria-valuenow="{{albumdata.popularity}}" aria-valuemin="0" aria-valuemax="100">{{albumdata.popularity}}</div></div></div>
+        </div>
+      </h5>
+      <h5>
+        <div class="row">
+          <div class="col-4"><span class="album-title">Data wydania albumu:</span></div>
+          <div class="col-8"><small class="text-muted song-artist">{{ albumdata.release_date }}</small></div>
+        </div>
+      </h5>
+      <hr>
+      <h6>ID utworu:</h6>
+      <code class="song-id">{{ songdata.player_specific_id }}</code>
+      <hr>
+      <h6>Adres do utworu:</h6>
+      {% if 'spotify' in songdata.player_specific_id %}
+      <a class="song-address" target="_blank" href="https://open.spotify.com/track/{{ songdata.player_specific_id.split(':')[2] }}">https://open.spotify.com/track/{{ songdata.player_specific_id.split(':')[2] }}</a>
+      {% else %}
+      Brak
+      {% endif %}
+      <hr>
       {{ songdata.data() }}
-
+      <hr>
+      {{ spotifysongdata.data() }}
+      <hr>
+      {{ artistdata.data() }}
+      <hr>
+      {{ albumdata.data() }}
+      <hr>
+      {{ songplays }}
     </div>
   </row>
 </div>

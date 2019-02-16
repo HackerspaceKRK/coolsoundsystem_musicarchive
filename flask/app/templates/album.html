@@ -3,10 +3,52 @@
 {% block content %}
 
 <div class="container">
+  <hr>
   <div class="row">
-    <div class="col-12">
+    <div class="col-4">
+      <img src="{{ albumdata.cover }}" width="100%"></img>
       <hr>
-      Test
+      <img src="{{ artistdata.image }}" width="100%"></img>
+    </div>
+    <div class="col-8">
+      <h3>
+        <span class="song-title">{{ albumdata.albumname }}</span>
+        <small class="text-muted song-artist">{{ artistdata.artistname }}</small>
+      </h3>
+      <hr>
+      <h5>
+        <div class="row">
+          <div class="col-4"><span class="album-title">Popularność albumu:</span></div>
+          <div class="col-8"><div class="progress" style="height:100%;"><div class="progress-bar" role="progressbar" style="width: {{albumdata.popularity}}%;" aria-valuenow="{{albumdata.popularity}}" aria-valuemin="0" aria-valuemax="100">{{albumdata.popularity}}/100</div></div></div>
+        </div>
+      </h5>
+      <h5>
+        <div class="row">
+          <div class="col-4"><span class="album-title">Data wydania albumu:</span></div>
+          <div class="col-8"><small class="text-muted song-artist">{{ albumdata.release_date }}</small></div>
+        </div>
+      </h5>
+      <h5>
+        <div class="row">
+          <div class="col-4"><span class="album-title">Przesłuchanych utworów z albumu:</span></div>
+          <div class="col-8">
+            <div class="progress" style="height:100%;">
+              <div class="progress-bar" role="progressbar"
+              style="width: {{ songsofalbum|length / albumdata.total_tracks|int * 100}}%;"
+              aria-valuenow="{{ songsofalbum|length}}"
+              aria-valuemin="0" aria-valuemax="{{albumdata.total_tracks}}">{{ songsofalbum|length }}/{{albumdata.total_tracks|int}}
+            </div>
+          </div>
+        </div>
+      </div>
+      </h5>
+      <hr>
+      {{ albumdata.data() }}
+      <hr>
+      {{ artistdata.data() }}
+      <hr>
+      {{ songsofalbum }}
+
     </div>
   </row>
 </div>

@@ -3,3 +3,5 @@ GENERAL_TOPIC = 'example/#'
 SPECIFIC_TOPIC = 'example/chromecast/playing'
 SILENT_IMAGE_BIG = "https://example.com/example.png"
 SILENT_IMAGE_SMALL = "https://example.com/example.png"
+CLIENT_ID = "YOUR-ID-HERE"
+CLIENT_SECRET = "YOUR-SECRET-HERE"

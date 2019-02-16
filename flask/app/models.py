@@ -42,14 +42,18 @@ class Artist(db.Model):
     artistname = db.Column(db.String(64), index=True, unique=True)
     albums = db.relationship('Album', backref='artist', lazy='dynamic') # many albums to one artist
     songs = db.relationship('Song', backref='artist', lazy='dynamic') # many songs to one artist
+    image = db.Column(db.String(64), index=True)
+    popularity = db.Column(db.Integer())
 
     def __repr__(self):
-        return '<Artist {}>'.format(self.id)
+        return '<Artist {}>'.format(self.artistid)
 
     def data(self):
         return {
                     'artistid': self.artistid,
-                    'artistname': self.artistname
+                    'artistname': self.artistname,
+                    'image': self.image,
+                    'popularity': self.popularity
                 }
 
 class Album(db.Model):
@@ -58,29 +62,57 @@ class Album(db.Model):
     artistid = db.Column(db.String(64), db.ForeignKey('artist.artistid'), nullable=False, index=True) # one artist to many albums
     cover = db.Column(db.String(64), index=True)
     songs = db.relationship('Song', backref='album', lazy='dynamic') # many songs to one album
+    popularity = db.Column(db.Integer())
+    release_date = db.Column(db.String(64))
+    total_tracks = db.Column(db.Integer())
 
     def __repr__(self):
-        return '<Album {}>'.format(self.id)
+        return '<Album {}>'.format(self.albumid)
 
     def data(self):
         return {
                     'albumid': self.albumid,
-                    'albumname': self.albumname
-                    'cover': self.cover
+                    'albumname': self.albumname,
+                    'artistid': self.artistid,
+                    'cover': self.cover,
+                    'popularity': self.popularity,
+                    'release_date': self.release_date,
+                    'total_tracks': self.total_tracks
                 }
 
+class SpotifySongData(db.Model):
+    songid = db.Column(db.String(64), primary_key=True)
+    popularity = db.Column(db.Integer())
+    track_number = db.Column(db.Integer())
+    key = db.Column(db.Integer())
+    mode = db.Column(db.Integer())
+    acousticness = db.Column(db.Integer())
+    danceability = db.Column(db.Integer())
+    energy = db.Column(db.Integer())
+    instrumentalness = db.Column(db.Integer())
+    liveness = db.Column(db.Integer())
+    loudness = db.Column(db.Integer())
+    speechiness = db.Column(db.Integer())
+    valence = db.Column(db.Integer())
+    tempo = db.Column(db.Integer())
 
+    def __repr__(self):
+        return '<SpotifySongData {}>'.format(self.songid)
 
-    # songs = [
-    #     {
-    #     'artist': 'Dubioza kolektiv',
-    #     'songname': 'Himna generacije',
-    #     'album': 'Pjesmice za djecu i odrasle',
-    #     'id':'2mZYQC01utmvwynQZVvplL',
-    #     'address': 'https://open.spotify.com/track/2mZYQC01utmvwynQZVvplL',
-    #     'thumb': 'https://i.scdn.co/image/762af66d1a31d1d68221e3721116ae71a6a339e4',
-    #     'image': 'https://i.scdn.co/image/8c54f79bbed8ac4af7a270786888c26bca930c42',
-    #     'timefrom':'13:37',
-    #     'timeto': '21:37'
-    #     }
-    # ]
+    def data(self):
+        return {
+                'songid': self.songid,
+                'popularity': self.popularity,
+                'track_number': self.track_number,
+                'key': self.key,
+                'mode': self.mode,
+                'acousticness': self.acousticness,
+                'danceability': self.danceability,
+                'energy': self.energy,
+                'instrumentalness': self.instrumentalness,
+                'liveness': self.liveness,
+                'loudness': self.loudness,
+                'speechiness': self.speechiness,
+                'valence': self.valence,
+                'tempo': self.tempo
+    }

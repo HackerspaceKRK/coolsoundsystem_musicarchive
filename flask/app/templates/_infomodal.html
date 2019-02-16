@@ -24,7 +24,7 @@
               <hr>
               <h6>Adres do utworu:</h6>
               {% if 'spotify' in play.track.player_specific_id %}
-              <a class="song-address" href="https://open.spotify.com/track/{{ play.track.player_specific_id.split(':')[2] }}">https://open.spotify.com/track/{{ play.track.player_specific_id.split(':')[2] }}</a>
+              <a class="song-address" target="_blank" href="https://open.spotify.com/track/{{ play.track.player_specific_id.split(':')[2] }}">https://open.spotify.com/track/{{ play.track.player_specific_id.split(':')[2] }}</a>
               {% else %}
               Brak
               {% endif %}
