@@ -54,14 +54,20 @@ def song(songid):
     albumdata = Album.query.get(songdata.albumid)
     artistdata = Artist.query.get(songdata.artistid)
     songplays = Play.query.filter_by(songid=songid).all()
-    return render_template('song.html', songdata=songdata, spotifysongdata=spotifysongdata, albumdata=albumdata, artistdata=artistdata)
+    return render_template('song.html', tf=getnormaltime, songdata=songdata, spotifysongdata=spotifysongdata, albumdata=albumdata, artistdata=artistdata, songplays=songplays)
 
 @app.route('/album/<albumid>')
 def album(albumid):
     albumdata = Album.query.get(albumid)
     artistdata = Artist.query.get(albumdata.artistid)
     songsofalbum = Song.query.filter_by(albumid=albumid).all()
-    return render_template('album.html', albumdata=albumdata, artistdata=artistdata, songsofalbum=songsofalbum)
+
+    lastplay = {}
+    for item in songsofalbum:
+            count = Play.query.filter_by(songid=item.songid).order_by(Play.timefrom.desc()).all()
+            lastplay.update({item.songid: count[0].data()})
+
+    return render_template('album.html', tf=getnormaltime, albumdata=albumdata, artistdata=artistdata, songsofalbum=songsofalbum, lastplay=lastplay)
 
 @app.route('/artist/<artistid>')
 def artist(artistid):

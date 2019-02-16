@@ -188,6 +188,10 @@ def on_message_music(client, userdata, msg):
             data.update({'id': hashlib.sha1(data['content_id'].encode('utf-8')).hexdigest()})
             if 'spotify' in data['content_id']:
                 data.update({'discovered_client': 'spotify'})
+            if 'soundcloud' in data['content_id']:
+                data.update({'discovered_client': 'soundcloud'})
+            else:
+                data.update({'discovered_client': None})
         else:
             data.update({'id': 'noid'})
 

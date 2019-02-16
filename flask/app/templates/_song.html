@@ -19,8 +19,8 @@
       <em>{{ play.track.artist.artistname }}</em>
     </a>
   </td>
-  <td class="timefrom align-middle">{{ moment(tf(play.timefrom)).format("LLLL") }}</td>
-  <td class="timeto align-middle">{{ moment(tf(play.timeto)).format("LLLL") }}</td>
+  <td class="timefrom align-middle">{{ moment(tf(play.timefrom), "YYYY-MM-DD HH:mm").format("LLLL") }}</td>
+  <td class="timeto align-middle">{{ moment(tf(play.timeto), "YYYY-MM-DD HH:mm").format("LLLL") }}</td>
   <td class="timeto align-middle"> {{ tf(play.timeto) - tf(play.timefrom) }}</td>
   <td class="infobutton align-middle">
     <button

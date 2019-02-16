@@ -1,0 +1,32 @@
+{% macro showdata(title, text) %}
+<h5>
+  <div class="row">
+    <div class="col-5"><span class="showdata-title">{{title}}</span></div>
+    <div class="col-7"><small class="showdata-text">{{text}}</small></div>
+  </div>
+</h5>
+{% endmacro%}
+
+{% macro showdatawithhref(title, text, href) %}
+<h5>
+  <div class="row">
+    <div class="col-5"><span class="showdata-title">{{title}}</span></div>
+    <div class="col-7"><a href="{{ href }}"><small class="showdata-text">{{text}}</small></a></div>
+  </div>
+</h5>
+{% endmacro%}
+
+{% macro showdatabar(title, min, max, current, percent, color) %}
+<h5>
+  <div class="row">
+    <div class="col-5"><span class="showdata-title">{{title}}</span></div>
+    <div class="col-7">
+      <div class="progress" style="height:100%;">
+        <div class="progress-bar progress-bar-striped progress-bar-animated {{ color }}" role="progressbar" style="width: {{ "%.2f"|format((current|float / max|float) * 100) }}%;" aria-valuenow="{{current}}" aria-valuemin="{{min}}" aria-valuemax="{{max}}">
+          {% if percent == 1 %}{{ "%.2f"|format((current|float / max|float) * 100) }}% {% else %}{{ current|int }} / {{ max|int }} {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</h5>
+{% endmacro%}

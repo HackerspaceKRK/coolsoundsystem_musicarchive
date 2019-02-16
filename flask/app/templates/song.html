@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+{% from 'macros.html' import showdata with context %}
+{% from 'macros.html' import showdatabar with context %}
+{% from 'macros.html' import showdatawithhref with context %}
 
 {% block content %}
 
@@ -6,54 +9,71 @@
   <hr>
   <div class="row">
     <div class="col-4">
-      <img src="{{ songdata.album.cover }}" width="100%"></img>
-      <hr>
-      <img src="{{ artistdata.image }}" width="100%"></img>
+      <img class="sticky-top" style="top: 100px;" src="{{ songdata.album.cover }}" width="100%"></img>
+
     </div>
     <div class="col-8">
       <h3>
         <span class="song-title">{{ songdata.songname }}</span>
-        <small class="text-muted song-artist">{{ artistdata.artistname }}</small>
       </h3>
       <hr>
+      {{ showdatawithhref('Wykonawca:', artistdata.artistname, url_for('artist', artistid=artistdata.artistid))}}
+      {{ showdatawithhref('Album:', albumdata.albumname, url_for('album', albumid=albumdata.albumid))}}
+      {% if spotifysongdata %}{{ showdata('Numer utworu na płycie:', spotifysongdata['track_number'])}}{% endif %}
       <h5>
         <div class="row">
-          <div class="col-4"><span class="album-title">Album:</span></div>
-          <div class="col-8"><small class="text-muted song-artist">{{ albumdata.albumname }}</small></div>
+          <div class="col-5"><span class="showdata-title">ID utworu:</span></div>
+          <div class="col-7"><small class="showdata-text"><code class="song-id">{{ songdata.player_specific_id }}</code></small></div>
         </div>
       </h5>
       <h5>
         <div class="row">
-          <div class="col-4"><span class="album-title">Popularność albumu:</span></div>
-          <div class="col-8"><div class="progress" style="height:100%;"><div class="progress-bar" role="progressbar" style="width: {{albumdata.popularity}}%;" aria-valuenow="{{albumdata.popularity}}" aria-valuemin="0" aria-valuemax="100">{{albumdata.popularity}}</div></div></div>
-        </div>
-      </h5>
-      <h5>
-        <div class="row">
-          <div class="col-4"><span class="album-title">Data wydania albumu:</span></div>
-          <div class="col-8"><small class="text-muted song-artist">{{ albumdata.release_date }}</small></div>
-        </div>
-      </h5>
-      <hr>
-      <h6>ID utworu:</h6>
-      <code class="song-id">{{ songdata.player_specific_id }}</code>
-      <hr>
-      <h6>Adres do utworu:</h6>
+          <div class="col-5"><span class="showdata-title">Adres do utworu:</span></div>
       {% if 'spotify' in songdata.player_specific_id %}
-      <a class="song-address" target="_blank" href="https://open.spotify.com/track/{{ songdata.player_specific_id.split(':')[2] }}">https://open.spotify.com/track/{{ songdata.player_specific_id.split(':')[2] }}</a>
+          <div class="col-7"><small class="showdata-text">
+            <a class="song-address" target="_blank" href="https://open.spotify.com/track/{{ songdata.player_specific_id.split(':')[2] }}">https://open.spotify.com/track/{{ songdata.player_specific_id.split(':')[2] }}</a></small></div>
       {% else %}
-      Brak
+          <div class="col-7"><small class="showdata-text">Brak</small></div>
       {% endif %}
+        </div>
+      </h5>
+{% if spotifysongdata %}
       <hr>
-      {{ songdata.data() }}
+      {{ showdata("Tempo utworu", spotifysongdata['tempo']|string + ' BPM') }}
+      {{ showdata("Molowość/durowość utworu", spotifysongdata['mode'])}}
+      {{ showdata("Tonacja utworu", spotifysongdata['key'])}}
+      {{ showdata("Głośność utworu", spotifysongdata['loudness']|string + ' dB')}}
       <hr>
-      {{ spotifysongdata.data() }}
+      {{showdatabar("Popularność utworu:", 0,100, spotifysongdata['popularity'], 1)}}
+      {{showdatabar("Akustyczność utworu:", 0, 1, spotifysongdata['acousticness'], 1)}}
+      {{showdatabar("Energiczność utworu:", 0, 1, spotifysongdata['energy'], 1)}}
+      {{showdatabar("Taneczność utworu:", 0, 1, spotifysongdata['danceability'], 1)}}
+      {{showdatabar("Instrumentalność utworu:", 0, 1, spotifysongdata['instrumentalness'], 1)}}
+      {{showdatabar("Koncertowość utworu:", 0, 1, spotifysongdata['liveness'], 1)}}
+      {{showdatabar("'Speechiness' utworu:", 0, 1, spotifysongdata['speechiness'], 1)}}
+      {{showdatabar("'Valence' utworu:", 0, 1, spotifysongdata['valence'], 1)}}
+{% endif %}
       <hr>
-      {{ artistdata.data() }}
-      <hr>
-      {{ albumdata.data() }}
-      <hr>
-      {{ songplays }}
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Kiedy ostatnio</th>
+            <th scope="col">Od</th>
+            <th scope="col">Do</th>
+            <th scope="col">Czas trwania</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for song in songplays %}
+          <tr>
+            <td>{{ moment(tf(song['timefrom']), "YYYY-MM-DD HH:mm").fromNow() }}</td>
+            <td class="timefrom align-middle">{{ moment(tf(song.timefrom), "YYYY-MM-DD HH:mm").format("LLLL") }}</td>
+            <td class="timeto align-middle">{{ moment(tf(song.timeto), "YYYY-MM-DD HH:mm").format("LLLL") }}</td>
+            <td class="timeto align-middle"> {{ tf(song.timeto) - tf(song.timefrom) }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
     </div>
   </row>
 </div>

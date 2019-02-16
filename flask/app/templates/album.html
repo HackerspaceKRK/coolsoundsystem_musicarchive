@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% from 'macros.html' import showdata with context %}
+{% from 'macros.html' import showdatabar with context %}
 
 {% block content %}
 
@@ -6,51 +8,62 @@
   <hr>
   <div class="row">
     <div class="col-4">
-      <img src="{{ albumdata.cover }}" width="100%"></img>
-      <hr>
-      <img src="{{ artistdata.image }}" width="100%"></img>
+      <img class="sticky-top" style="top: 100px;" src="{{ albumdata.cover }}" width="100%"></img>
     </div>
     <div class="col-8">
       <h3>
-        <span class="song-title">{{ albumdata.albumname }}</span>
-        <small class="text-muted song-artist">{{ artistdata.artistname }}</small>
+        <span class="song-title">Album:</span>
+        <small class="text-muted song-artist">{{ albumdata.albumname }}</small>
       </h3>
       <hr>
-      <h5>
-        <div class="row">
-          <div class="col-4"><span class="album-title">Popularność albumu:</span></div>
-          <div class="col-8"><div class="progress" style="height:100%;"><div class="progress-bar" role="progressbar" style="width: {{albumdata.popularity}}%;" aria-valuenow="{{albumdata.popularity}}" aria-valuemin="0" aria-valuemax="100">{{albumdata.popularity}}/100</div></div></div>
-        </div>
-      </h5>
-      <h5>
-        <div class="row">
-          <div class="col-4"><span class="album-title">Data wydania albumu:</span></div>
-          <div class="col-8"><small class="text-muted song-artist">{{ albumdata.release_date }}</small></div>
-        </div>
-      </h5>
-      <h5>
-        <div class="row">
-          <div class="col-4"><span class="album-title">Przesłuchanych utworów z albumu:</span></div>
-          <div class="col-8">
-            <div class="progress" style="height:100%;">
-              <div class="progress-bar" role="progressbar"
-              style="width: {{ songsofalbum|length / albumdata.total_tracks|int * 100}}%;"
-              aria-valuenow="{{ songsofalbum|length}}"
-              aria-valuemin="0" aria-valuemax="{{albumdata.total_tracks}}">{{ songsofalbum|length }}/{{albumdata.total_tracks|int}}
-            </div>
-          </div>
-        </div>
-      </div>
-      </h5>
+      {% if albumdata.popularity %}
+        {% if albumdata.popularity is not none %}
+          {{ showdatabar('Popularność albumu:', 0, 100, albumdata.popularity, 1)}}
+        {% endif %}
+      {% endif %}
+
+      {% if albumdata.popularity %}
+        {% if albumdata.popularity is not none %}
+          {{ showdata('Data wydania albumu', albumdata.release_date)}}
+        {% endif %}
+      {% endif %}
+
+      {% if albumdata.total_tracks %}
+        {% if albumdata.total_tracks is not none %}
+          {{ showdatabar('Przesłuchanych utworów z albumu:', 0, albumdata.total_tracks|int, songsofalbum|length, 0)}}
+          <hr>
+        {% endif %}
+      {% endif %}
+
+      <h3>
+        <span class="song-title">Przesłuchane utwory z tego albumu</span>
+      </h3>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Tytuł</th>
+            <th scope="col">Kiedy ostatnio</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for song in songsofalbum%}
+          <tr>
+            <td><a href="{{url_for('song', songid=song.songid)}}">{{song.songname}}</a></td>
+            <td>{{ moment(tf(lastplay[song.songid]['timefrom']), "YYYY-MM-DD HH:mm").fromNow() }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+<!--
+{#{{ albumdata.data() }} #}
       <hr>
-      {{ albumdata.data() }}
+  {#    {{ artistdata.data() }} #}
       <hr>
-      {{ artistdata.data() }}
-      <hr>
-      {{ songsofalbum }}
+    {#  {{ songsofalbum }} #} -->
 
     </div>
-  </row>
+  </div>
 </div>
 
 {% endblock %}

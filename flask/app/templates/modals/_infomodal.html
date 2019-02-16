@@ -36,9 +36,9 @@
               <h6>Ostatnio odtwarzany:</h6>
             </div>
             <div class="col-8">
-              {{ moment(tf(lastplay[play.songid]['timefrom'])).fromNow() }},
-              {{ moment(tf(lastplay[play.songid]['timefrom'])).calendar() }}
-              do {{ moment(tf(lastplay[play.songid]['timeto'])).calendar() }}
+              {{ moment(tf(lastplay[play.songid]['timefrom']), "YYYY-MM-DD HH:mm").fromNow() }},
+              {{ moment(tf(lastplay[play.songid]['timefrom']), "YYYY-MM-DD HH:mm").calendar() }}
+              do {{ moment(tf(lastplay[play.songid]['timeto']), "YYYY-MM-DD HH:mm").calendar() }}
               (czas trwania: {{ tf(lastplay[play.songid]['timeto']) - tf(lastplay[play.songid]['timefrom']) }})
             </div>
           </div>
@@ -59,14 +59,6 @@
             </div>
           </div>
           <hr>
-          <div class="row">
-            <div class="col-4">
-              <h6>Statystyki</h6>
-            </div>
-            <div class="col-8">
-              <a href="#">Utworu</a> | <a href="#">Albumu</a> | <a href="#">Wykonawcy</a>
-            </div>
-          </div>
         </div>
       </div>
       <div class="modal-footer">
