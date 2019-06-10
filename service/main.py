@@ -15,7 +15,8 @@ client_secret = config.CLIENT_SECRET
 client_credentials_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
 sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
-conn = sqlite3.connect('../shared/app.db')
+conn = sqlite3.connect(config.DB_PATH)
+print(conn)
 conn.set_trace_callback(print)
 c = conn.cursor()
 
@@ -38,7 +39,7 @@ def handle_song(data, timestamp, lastsong):
         if data == lastsong['data']:
             lastsong['timestamps']['lastsong_current'] = timestamp
         else:
-
+            print(lastsong['data'])
             songdict = {
                 'songid': str(lastsong['data']['id']),
                 'artistid': str(lastsong['data']['artistid']),
@@ -71,34 +72,37 @@ def handle_song(data, timestamp, lastsong):
                 'popularity':None,
             }
 
-            if lastsong['data']['discovered_client'] == 'spotify':
-                spotify_trackdata = sp.track(lastsong['data']['content_id'])
-                spotify_albumdata = sp.album(spotify_trackdata['album']['id'])
-                spotify_artistdata = sp.artist(spotify_trackdata['artists'][0]['id'])
-                spotify_featuredata = sp.audio_features(lastsong['data']['content_id'])
-                spotifydict = {
-                    'songid': lastsong['data']['id'],
-                    'popularity': spotify_trackdata['popularity'],
-                    'track_number': spotify_trackdata['track_number'],
-                    'key': spotify_featuredata[0]['key'],
-                    'mode': spotify_featuredata[0]['mode'],
-                    'acousticness': spotify_featuredata[0]['acousticness'],
-                    'danceability': spotify_featuredata[0]['danceability'],
-                    'energy': spotify_featuredata[0]['energy'],
-                    'instrumentalness': spotify_featuredata[0]['instrumentalness'],
-                    'liveness': spotify_featuredata[0]['liveness'],
-                    'loudness': spotify_featuredata[0]['loudness'],
-                    'speechiness': spotify_featuredata[0]['speechiness'],
-                    'valence': spotify_featuredata[0]['valence'],
-                    'tempo': spotify_featuredata[0]['tempo']
-                }
-                artistdict['image'] = spotify_artistdata['images'][0]['url']
-                artistdict['popularity'] = spotify_artistdata['popularity']
-                albumdict['popularity'] = spotify_albumdata['popularity']
-                albumdict['release_date'] = spotify_albumdata['release_date']
-                albumdict['total_tracks'] = spotify_albumdata['total_tracks']
-            else:
-                spotifydict = None
+            if 'discovered_client' in lastsong['data']:
+                if lastsong['data']['discovered_client'] == 'spotify':
+                    spotify_trackdata = sp.track(lastsong['data']['content_id'])
+                    spotify_albumdata = sp.album(spotify_trackdata['album']['id'])
+                    spotify_artistdata = sp.artist(spotify_trackdata['artists'][0]['id'])
+                    print(spotify_artistdata)
+                    spotify_featuredata = sp.audio_features(lastsong['data']['content_id'])
+                    spotifydict = {
+                        'songid': lastsong['data']['id'],
+                        'popularity': spotify_trackdata['popularity'],
+                        'track_number': spotify_trackdata['track_number'],
+                        'key': spotify_featuredata[0]['key'],
+                        'mode': spotify_featuredata[0]['mode'],
+                        'acousticness': spotify_featuredata[0]['acousticness'],
+                        'danceability': spotify_featuredata[0]['danceability'],
+                        'energy': spotify_featuredata[0]['energy'],
+                        'instrumentalness': spotify_featuredata[0]['instrumentalness'],
+                        'liveness': spotify_featuredata[0]['liveness'],
+                        'loudness': spotify_featuredata[0]['loudness'],
+                        'speechiness': spotify_featuredata[0]['speechiness'],
+                        'valence': spotify_featuredata[0]['valence'],
+                        'tempo': spotify_featuredata[0]['tempo']
+                    }
+                    artistdict['image'] = spotify_artistdata['images'][0]['url']
+                    artistdict['popularity'] = spotify_artistdata['popularity']
+                    albumdict['popularity'] = spotify_albumdata['popularity']
+                    albumdict['release_date'] = spotify_albumdata['release_date']
+                    albumdict['total_tracks'] = spotify_albumdata['total_tracks']
+                else:
+                    spotifydict = None
+            else: lastsong['data']['discovered_client'] = ''
 
             # print(lastsong['timestamps'])
             # print(float(lastsong['timestamps']['lastsong_current']) - float(lastsong['timestamps']['lastsong_start']))
@@ -174,7 +178,7 @@ def acquire_data(dataToAcquire, noDataComm):
 
 def on_message_music(client, userdata, msg):
     # try:
-        payload = json.loads(msg.payload)
+        payload = json.loads(msg.payload.decode('utf-8'))
         data = {}
 
 
@@ -186,12 +190,12 @@ def on_message_music(client, userdata, msg):
 
         if data['content_id'] is not None:
             data.update({'id': hashlib.sha1(data['content_id'].encode('utf-8')).hexdigest()})
-            if 'spotify' in data['content_id']:
-                data.update({'discovered_client': 'spotify'})
-            if 'soundcloud' in data['content_id']:
-                data.update({'discovered_client': 'soundcloud'})
+            if 'spotify' in str(data['content_id']):
+                data['discovered_client'] = 'spotify'
+            elif 'soundcloud' in str(data['content_id']):
+                data['discovered_client'] = 'soundcloud'
             else:
-                data.update({'discovered_client': None})
+                data.update({'discovered_client': ''})
         else:
             data.update({'id': 'noid'})
 
@@ -206,6 +210,8 @@ def on_message_music(client, userdata, msg):
             data.update({'albumid': 'noid'})
 
         handle_song(data, time.time(), last_song)
+
+
     # except Exception as e:
     #     print("Exception: " + str(e))
     #     pass
