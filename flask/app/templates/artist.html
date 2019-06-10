@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% from 'macros.html' import showdata with context %}
+{% from 'macros.html' import showdatabar with context %}
 
 {% block content %}
 
@@ -6,16 +8,76 @@
   <hr>
   <div class="row">
     <div class="col-4">
-      <img src="{{ artistdata.image }}" width="100%"></img>
+      {% if artistdata.image %}
+      <img class="sticky-top" style="top: 100px;" src="{{ artistdata.image }}" width="100%"></img>
+      {% else %}
+      <img class="sticky-top" style="top: 100px;" src="{{ url_for('static', filename='img/noimage.png')}}" width="100%"></img>
+      {% endif %}
     </div>
     <div class="col-8">
-      <h1>{{ artistdata.artistname }}</h1>
+	<h1>{{ artistdata.artistname }}</h1>
       <hr>
-      {{ artistdata.data() }}
+
+      {% if artistdata.popularity %}
+        {% if artistdata.popularity is not none %}
+          {{ showdatabar('Popularność artysty (wg spotify):', 0, 100, artistdata.popularity, 1)}}
+        {% endif %}
+      {% endif %}
       <hr>
-      {{ albumsofartist }}
+
+      <h3>
+        <span class="song-title">Albumy z których utwory przesłuchano:</span>
+      </h3>
+
       <hr>
-      {{ songsofartist }}
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Okładka</th>
+            <th scope="col">Tytuł</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for album in albumsofartist%}
+          <tr>
+	    <td>
+		<a href="{{ url_for('album', albumid=album.albumid) }}" class="float-left .img-thumbnail">
+                  <img src="{{ album.cover }}" width="64" class="media-photo" alt="Album cover">
+                </a>
+	    </td>
+            <td><a href="{{url_for('album', albumid=album.albumid)}}">{{album.albumname}} ({{album.release_date}})</a></td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+
+      <hr>
+
+      <h3>
+        <span class="song-title">Przesłuchane utwory tego wykonawcy:</span>
+      </h3>
+
+      <hr>
+
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Tytuł</th>
+            <th scope="col">Kiedy ostatnio</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for song in songsofartist%}
+          <tr>
+            <td><a href="{{url_for('song', songid=song.songid)}}">{{song.songname}}</a></td>
+            <td>{{ moment(tf(lastplay[song.songid]['timefrom']), "YYYY-MM-DD HH:mm").fromNow() }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+
     </div>
   </row>
 </div>

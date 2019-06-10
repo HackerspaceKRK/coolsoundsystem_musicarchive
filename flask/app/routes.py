@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, url_for, request
+from flask import render_template, url_for, request, redirect
 from app import db
 from app.models import Song, Play, Album, Artist, SpotifySongData
 
@@ -14,6 +14,8 @@ def getnormaltime(t):
     return datetime.fromtimestamp(int(float(t)))
 
 @app.route('/')
+def main():
+    return redirect(url_for('index'))
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -74,4 +76,10 @@ def artist(artistid):
     artistdata = Artist.query.get(artistid)
     albumsofartist = Album.query.filter_by(artistid=artistid).all()
     songsofartist = Song.query.filter_by(artistid=artistid).all()
-    return render_template('artist.html', artistdata=artistdata, albumsofartist=albumsofartist, songsofartist=songsofartist)
+
+    lastplay = {}
+    for item in songsofartist:
+            count = Play.query.filter_by(songid=item.songid).order_by(Play.timefrom.desc()).all()
+            lastplay.update({item.songid: count[0].data()})
+
+    return render_template('artist.html', artistdata=artistdata, albumsofartist=albumsofartist, songsofartist=songsofartist, tf=getnormaltime, lastplay=lastplay)
