@@ -1,14 +1,16 @@
 <tr class="notasong">
   <td>
     <a href="#" class="float-left .img-thumbnail">
+		  {% if play.track.image %}
                   <img src="{{ play.track.image }}" width="64" class="media-photo">
+		  {% endif %}
                   </a>
   </td>
-  <td colspan="4" class="nodata align-middle"><h5>Brak danych / nieobsługiwany odtwarzacz / cisza</h5></strong></td>
+  <td colspan="3" class="nodata align-middle"><h5>Brak danych / nieobsługiwany odtwarzacz / cisza</h5></strong></td>
 
   </td>
-  <td class="timefrom timeclass align-middle">{{ tf(play.timefrom) }}</td>
-  <td class="timeto timeclass align-middle">{{ tf(play.timeto) }}</td>
+  <td class="timefrom timeclass align-middle">{{ moment(tf(play.timefrom), "YYYY-MM-DD HH:mm").format("LLLL")  }}</td>
+  <td class="timeto timeclass align-middle">{{ moment(tf(play.timeto), "YYYY-MM-DD HH:mm").format("LLLL")  }}</td>
   <td class="timeto timeclass align-middle"> {{ tf(play.timeto) - tf(play.timefrom) }}</td>
   {% if debug %}
   <td class="otherbuttons align-middle">
@@ -18,5 +20,7 @@
           data-target="#debugModal-{{ play.id }}"
           class="btn btn-outline-secondary btn-sm">Debug</button>
   </td>
+  {% else %}
+  <td class="align-middle"></td>
   {% endif %}
 </tr>
