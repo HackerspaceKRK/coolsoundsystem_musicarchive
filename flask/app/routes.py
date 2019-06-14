@@ -7,7 +7,7 @@ from app.models import Song, Play, Album, Artist, SpotifySongData
 from datetime import datetime
 
 # more clumsiness with global variables ahead
-idblacklist=[None, 'spotify:music:content', 'Brak danych']
+idblacklist=[None, 'spotify:music:content', 'Brak danych', u'']
 
 # even clumsier function to pass to jinja template
 def getnormaltime(t):
@@ -83,3 +83,13 @@ def artist(artistid):
             lastplay.update({item.songid: count[0].data()})
 
     return render_template('artist.html', artistdata=artistdata, albumsofartist=albumsofartist, songsofartist=songsofartist, tf=getnormaltime, lastplay=lastplay)
+
+@app.route('/nope/<songid>')
+def nope(songid):
+    songdata = Song.query.get(songid)
+    spotifysongdata = SpotifySongData.query.get(songid)
+    albumdata = Album.query.get(songdata.albumid)
+    artistdata = Artist.query.get(songdata.artistid)
+    songplays = Play.query.filter_by(songid=songid).all()
+    return render_template('nope.html', tf=getnormaltime, songdata=songdata, spotifysongdata=spotifysongdata, albumdata=albumdata, artistdata=artistdata, songplays=songplays)
+

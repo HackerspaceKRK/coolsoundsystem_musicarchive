@@ -1,0 +1,30 @@
+<tr>
+  <td>
+    <a href="{{ url_for('song', songid=play.songid) }}" class="float-left .img-thumbnail">
+                  <img src="{{ url_for('static', filename='img/chrome.png') }}" width="64" class="media-photo" alt="Album cover">
+                  </a>
+  </td>
+  <td colspan="3" class="nodata align-middle">
+    <a href="{{ url_for('nope', songid=play.songid) }}">
+      <h5>Google Chrome Audio Casting</h5>
+    </a>
+  </td>
+  <td class="timefrom align-middle">{{ moment(tf(play.timefrom), "YYYY-MM-DD HH:mm").format("LLLL") }}</td>
+  <td class="timeto align-middle">{{ moment(tf(play.timeto), "YYYY-MM-DD HH:mm").format("LLLL") }}</td>
+  <td class="timeto align-middle"> {{ tf(play.timeto) - tf(play.timefrom) }}</td>
+  <td class="infobutton align-middle">
+    <button
+    type="button"
+    class="btn btn-outline-success btn-sm"
+    data-toggle="modal" data-target="#infoModal-{{ play.id }}">Info</button>
+  </td>
+  {% if debug %}
+  <td class="otherbuttons align-middle">
+    <button
+      type="button"
+      data-toggle="modal"
+      data-target="#debugModal-{{ play.id }}"
+      class="btn btn-outline-secondary btn-sm">Debug</button>
+  </td>
+  {% endif %}
+</tr>

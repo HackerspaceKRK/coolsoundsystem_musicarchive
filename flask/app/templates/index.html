@@ -23,9 +23,13 @@
         <tbody>
           {% for play in plays %}
             {% if play.track.player_specific_id not in bl %}
-              {% include '_song.html' %}
+                {% include '_song.html' %}
             {% else %}
-              {% include '_notasong.html' %}
+              {% if 'audio casting' in play.track.songname|string %}
+                {% include '_cast.html' %}
+              {% else %}
+                {% include '_notasong.html' %}
+              {% endif %}
             {% endif %}
           {% endfor %}
         </tbody>

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% from 'macros.html' import showdata with context %}
+{% from 'macros.html' import showdatabar with context %}
+{% from 'macros.html' import showdatawithhref with context %}
+
+{% block content %}
+
+<div class="container">
+  <hr>
+  <div class="row">
+    <div class="col-4">
+      {% if 'audio casting' in songdata.songname|string  %}
+      <img class="sticky-top" style="top: 100px;" src="{{ url_for('static', filename='img/chrome.png') }}" width="100%"></img>
+      {% else %}	
+      <img class="sticky-top" style="top: 100px;" src="{{ songdata.album.cover }}" width="100%"></img>
+      {% endif %}
+    </div>
+    <div class="col-8">
+      <h3>
+        <span class="song-title">{{ songdata.songname }}</span>
+      </h3>
+      <p>Niestety ta opcja odtwarzania muzyki w spejsie nie oferuje żadnych przydatnych metadanych, które możnaby wyświetlić czy przeanalizować.</p>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Kiedy ostatnio</th>
+            <th scope="col">Od</th>
+            <th scope="col">Do</th>
+            <th scope="col">Czas trwania</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for song in songplays %}
+          <tr>
+            <td>{{ moment(tf(song['timefrom']), "YYYY-MM-DD HH:mm").fromNow() }}</td>
+            <td class="timefrom align-middle">{{ moment(tf(song.timefrom), "YYYY-MM-DD HH:mm").format("LLLL") }}</td>
+            <td class="timeto align-middle">{{ moment(tf(song.timeto), "YYYY-MM-DD HH:mm").format("LLLL") }}</td>
+            <td class="timeto align-middle"> {{ tf(song.timeto) - tf(song.timefrom) }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </row>
+</div>
+
+{% endblock %}
