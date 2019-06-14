@@ -1,7 +1,7 @@
 <tr>
   <td>
     <a href="{{ url_for('song', songid=play.songid) }}" class="float-left .img-thumbnail">
-                  <img src="{{ play.track.album.cover }}" width="64" class="media-photo" alt="Album cover">
+                  <img src="{{ play.track.album.cover }}" width="64" class="media-photo" alt="{{ play.track.album.albumname }}">
                   </a>
   </td>
   <td class="songname align-middle">
@@ -9,18 +9,12 @@
       <strong>{{ play.track.songname }}</strong>
     </a>
   </td>
-  <td class="album align-middle">
-    <a href="{{ url_for('album', albumid=play.track.albumid)}}">
-      {{ play.track.album.albumname }}
-    </a>
-  </td>
   <td class="artist align-middle">
     <a href="{{ url_for('artist', artistid=play.track.artistid)}}">
       <em>{{ play.track.artist.artistname }}</em>
     </a>
   </td>
-  <td class="timefrom align-middle">{{ moment(tf(play.timefrom), "YYYY-MM-DD HH:mm").format("LLLL") }}</td>
-  <td class="timeto align-middle">{{ moment(tf(play.timeto), "YYYY-MM-DD HH:mm").format("LLLL") }}</td>
+  <td class="timefrom align-middle">{{ moment(tf(play.timefrom), "YYYY-MM-DD HH:mm").format("D MMMM YYYY, HH:mm:ss") }}</td>
   <td class="timeto align-middle"> {{ tf(play.timeto) - tf(play.timefrom) }}</td>
   <td class="infobutton align-middle">
     <button

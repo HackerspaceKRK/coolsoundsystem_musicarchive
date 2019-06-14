@@ -4,13 +4,12 @@
                   <img src="{{ url_for('static', filename='img/chrome.png') }}" width="64" class="media-photo" alt="Album cover">
                   </a>
   </td>
-  <td colspan="3" class="nodata align-middle">
+  <td colspan="2" class="nodata align-middle">
     <a href="{{ url_for('nope', songid=play.songid) }}">
       <h5>Google Chrome Audio Casting</h5>
     </a>
   </td>
   <td class="timefrom align-middle">{{ moment(tf(play.timefrom), "YYYY-MM-DD HH:mm").format("LLLL") }}</td>
-  <td class="timeto align-middle">{{ moment(tf(play.timeto), "YYYY-MM-DD HH:mm").format("LLLL") }}</td>
   <td class="timeto align-middle"> {{ tf(play.timeto) - tf(play.timefrom) }}</td>
   <td class="infobutton align-middle">
     <button
