@@ -30,3 +30,40 @@
   </div>
 </h5>
 {% endmacro%}
+
+{% macro showranktable(criteria_desc, criteria, data, unit) %}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope='col'></th>
+      <th scope="col">Tytuł</th>
+      <th scope='col'>Wykonawca</th>
+      <th scope="col">{{ criteria_desc }}</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for i in data %}
+<tr>
+  <td>
+    <a href="{{ url_for('album', albumid=i['albumdata'].albumid) }}" class="float-left .img-thumbnail">
+      <img src="{{ i['albumdata'].cover }}" width="64" class="media-photo" alt="Album cover">
+    </a>
+  </td>
+  <td>
+    <a href="{{ url_for('song', songid=i['songdata'].songid) }}">
+      {{i['songdata'].songname}}
+    </a>
+  </td>
+  <td>
+    <a href="{{ url_for('artist', artistid=i['artistdata'].artistid) }}">
+      {{i['artistdata'].artistname}}
+    </a>
+  </td>
+  <td>{{i['data'][criteria]}}{{ unit }}</td>
+<tr>
+{% endfor %}
+</tbody>
+</table>
+
+{% endmacro %}

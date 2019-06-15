@@ -13,6 +13,15 @@ idblacklist=[None, 'spotify:music:content', 'Brak danych', u'']
 def getnormaltime(t):
     return datetime.fromtimestamp(int(float(t)))
 
+def getranks(data):
+    result = []
+    for item in data:
+        songdata = Song.query.get(item.songid)
+        albumdata = Album.query.get(songdata.albumid)
+        artistdata = Artist.query.get(songdata.artistid)
+        result.append({'songdata': songdata, 'artistdata': artistdata, 'albumdata': albumdata, 'data': item})
+    return result
+
 @app.route('/')
 def main():
     return redirect(url_for('index'))
@@ -93,3 +102,18 @@ def nope(songid):
     songplays = Play.query.filter_by(songid=songid).all()
     return render_template('nope.html', tf=getnormaltime, songdata=songdata, spotifysongdata=spotifysongdata, albumdata=albumdata, artistdata=artistdata, songplays=songplays)
 
+@app.route('/ranking/')
+def ranking():
+    popularity = SpotifySongData.query.order_by(SpotifySongData.popularity.desc()).limit(5).all()
+    populardata = getranks(popularity)
+
+    hipsterity = SpotifySongData.query.order_by(SpotifySongData.popularity.asc()).limit(5).all()
+    hipsterdata = getranks(hipsterity)
+
+    speed = SpotifySongData.query.order_by(SpotifySongData.tempo.desc()).limit(5).all()
+    speeddata = getranks(speed)
+
+    slow = SpotifySongData.query.order_by(SpotifySongData.tempo.asc()).limit(5).all()
+    slowdata = getranks(slow)
+
+    return render_template('ranking.html', popular=populardata, hipster=hipsterdata, speedy=speeddata, slowy=slowdata)

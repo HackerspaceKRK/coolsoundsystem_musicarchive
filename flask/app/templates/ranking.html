@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% from 'macros.html' import showranktable with context %}
+
+{% block content %}
+
+<div class="container">
+  <hr>
+  <div class="row">
+    <div class="col-6">
+      {{ showranktable('Popularność', 'popularity', popular, "%") }}
+    </div>
+    <div class="col-6">
+      {{ showranktable('Popularność', 'popularity', hipster, "%") }}
+    </div>
+  </div>
+  <hr/>
+  <div class="row">
+    <div class="col-6">
+      {{ showranktable('Tempo', 'tempo', speedy, " BPM") }}
+    </div>
+    <div class="col-6">
+      {{ showranktable('Tempo', 'tempo', slowy, " BPM") }}
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}
